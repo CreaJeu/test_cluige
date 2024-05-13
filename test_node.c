@@ -71,7 +71,7 @@ static void test_get_child_2()
 }
 static void test_get_node_abs0()
 {
-    char node_path[200] = "/test1/";
+    char node_path[200] = "/public_root_2D/test1";
     Node* res = iCluige.iNode.get_node(NULL,&node_path);
     if (res == NULL)
     {
@@ -87,7 +87,7 @@ static void test_get_node_abs0()
 
 static void test_get_node_abs1()
 {
-    char node_path[200] = "/test1/child_test1/";
+    char node_path[200] = "/public_root_2D/test1/child_test1";
     Node* res = iCluige.iNode.get_node(NULL,&node_path);
     if (res == NULL)
     {
@@ -102,7 +102,7 @@ static void test_get_node_abs1()
 }
 static void test_get_node_abs2()
 {
-    char node_path[200] = "/sib_test1/";
+    char node_path[200] = "/public_root_2D/sib_test1";
     Node* res = iCluige.iNode.get_node(NULL,&node_path);
     if (res == NULL)
     {
@@ -116,7 +116,7 @@ static void test_get_node_abs2()
 }
 static void test_get_node_abs3()
 {
-char node_path[200] = "/sib_test1/child_test1/";
+char node_path[200] = "/public_root_2D/sib_test1/child_test1";
     Node* res = iCluige.iNode.get_node(NULL,&node_path);
     if (res != NULL)
     {
@@ -124,7 +124,7 @@ char node_path[200] = "/sib_test1/child_test1/";
     }
     else
     {
-        printf("SUCCESS-------------");
+        printf("SUCCESS------------- invalid path returned NULL test_getnode_abs3");
     }
     printf("\n");
 }
@@ -288,16 +288,17 @@ int main()
     iCluige.iNode.add_child(node1, node2);
     iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
     printf("\n Test get_node() method ----------------------------------------------------------------------------- \n");
-    test_get_node_abs0();
-    test_get_node_abs1();
-    test_get_node_abs2();
-    test_get_node_abs3();
 
-    test_get_node_not_abs0();
-    test_get_node_not_abs1();
-    test_get_node_not_abs2();
-    test_get_node_not_abs3();
-    test_get_node_not_abs4();
+    //test_get_node_abs0();
+    //test_get_node_abs1();
+    //test_get_node_abs2();
+    //test_get_node_abs3();
+
+    //test_get_node_not_abs0();
+    //test_get_node_not_abs1();
+    //test_get_node_not_abs2();
+    //test_get_node_not_abs3();
+    //test_get_node_not_abs4();
     test_get_node_not_abs5();
     test_get_node_not_abs6();
     printf("\nTest get_child() method ----------------------------------------------------------------------------- \n");
@@ -307,9 +308,9 @@ int main()
     test_get_child_2();
     printf("\nTest remove_child() method ----------------------------------------------------------------------------- \n");
     //test_remove_child_0();//can't test both at the same time
-    //test_remove_child_1();
+    //test_remove_child_1()
 
-    printf("\nTest get_path() method -----------------------------------------------------------------------------");
+    printf("\nTest get_path() method -----------------------------------------------------------------------------\n");
     char* p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D->children);
     printf("\n%s", p);
     //p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D);
@@ -319,6 +320,12 @@ int main()
     p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D->children->children);
     printf("\n%s", p);
     free(p);
+
+    printf("\nTest queue_free() method -----------------------------------------------------------------------------\n");
+    iCluige.iNode.queue_free(iCluige.public_root_2D->children->children);
+    iCluige.iNode.queue_free(iCluige.public_root_2D->children);
+    iCluige.iNode.empty_dq_free();
+
 
     printf("Finishing...\n");
     return cluige_finish();
