@@ -44,6 +44,7 @@
 			<Add option="-static-libgcc" />
 			<Add option="-static" />
 		</Linker>
+		<Unit filename="icon.svg" />
 		<Unit filename="test_node.c">
 			<Option compilerVar="CC" />
 		</Unit>
