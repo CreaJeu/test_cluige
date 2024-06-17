@@ -6,8 +6,13 @@
 #include <stdlib.h>
 #define MAX_SIZE 1000000
 
+// WRITE #define IN_CAMERA_TEST if you want to test the camera
+// WRITE #define IN_TEST  if you want to test node new functions
 
 
+#define IN_CAMERA_TEST
+
+#ifdef IN_TEST
 static void test_get_child_0()
 {
     int index = 0;
@@ -36,9 +41,9 @@ static void test_get_child_1()
 }
 static void test_get_child_2()
 {
-    int index = 5;
+    int index = 0;
     Node* temp = iCluige.iNode.get_child(iCluige.private_root_2D, index);
-    if(temp == NULL)  //take the second child in private_root_2D
+    if(temp == iCluige.private_root_2D->children)  //take the second child in private_root_2D
     {
         printf("SUCCESS-------------test_get_child_2");
     }
@@ -50,7 +55,7 @@ static void test_get_child_2()
 
 static void test_get_child_3()
 {
-    int index = -500;
+    int index = 500;
     Node* temp = iCluige.iNode.get_child(iCluige.private_root_2D, index);
     if(temp == NULL)  //take the second child in private_root_2D
     {
@@ -78,8 +83,8 @@ static void test_get_child_4()
 
 static void test_get_node_abs0()
 {
-    char node_path[200] = "/public_root_2D/test1";
-    Node* res = iCluige.iNode.get_node(NULL,&node_path);
+    char* node_path = "/public_root_2D/test1";
+    Node* res = iCluige.iNode.get_node(NULL,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_0");
@@ -94,8 +99,8 @@ static void test_get_node_abs0()
 
 static void test_get_node_abs1()
 {
-    char node_path[200] = "/public_root_2D/test1/child_test1";
-    Node* res = iCluige.iNode.get_node(NULL,&node_path);
+    char* node_path = "/public_root_2D/test1/child_test1";
+    Node* res = iCluige.iNode.get_node(NULL,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_1");
@@ -109,8 +114,8 @@ static void test_get_node_abs1()
 }
 static void test_get_node_abs2()
 {
-    char node_path[200] = "/public_root_2D/sib_test1";
-    Node* res = iCluige.iNode.get_node(NULL,&node_path);
+    char* node_path = "/public_root_2D/sib_test1";
+    Node* res = iCluige.iNode.get_node(NULL,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_2");
@@ -123,8 +128,8 @@ static void test_get_node_abs2()
 }
 static void test_get_node_abs3()
 {
-char node_path[200] = "/public_root_2D/sib_test1/child_test1";
-    Node* res = iCluige.iNode.get_node(NULL,&node_path);
+char* node_path = "/public_root_2D/sib_test1/child_test1";
+    Node* res = iCluige.iNode.get_node(NULL,node_path);
     if (res != NULL)
     {
         printf("FAILED-------------%s",res->name);
@@ -139,8 +144,8 @@ char node_path[200] = "/public_root_2D/sib_test1/child_test1";
 
 static void test_get_node_not_abs0()
 {
-    char node_path[200] = "test1";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,&node_path);
+    char* node_path = "test1";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs1");
@@ -154,8 +159,8 @@ static void test_get_node_not_abs0()
 
 static void test_get_node_not_abs1()
 {
-    char node_path[200] = "test1/child_test1";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,&node_path);
+    char* node_path = "test1/child_test1";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs1");
@@ -168,8 +173,8 @@ static void test_get_node_not_abs1()
 }
 static void test_get_node_not_abs2()
 {
-    char node_path[200] = "sib_test1";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,&node_path);
+    char* node_path = "sib_test1";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs2");
@@ -183,8 +188,8 @@ static void test_get_node_not_abs2()
 
 static void test_get_node_not_abs3()//get current node
 {
-    char node_path[200] = ".";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,&node_path);
+    char* node_path = ".";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs3");
@@ -198,8 +203,8 @@ static void test_get_node_not_abs3()//get current node
 
 static void test_get_node_not_abs4()//get parent node
 {
-    char node_path[200] = "..";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,&node_path);
+    char* node_path = "..";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs4");
@@ -212,8 +217,8 @@ static void test_get_node_not_abs4()//get parent node
 }
 static void test_get_node_not_abs5()//get grand parent node
 {
-    char node_path[200] = "../..";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children->children,&node_path);
+    char* node_path = "../..";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children->children,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs5");
@@ -226,8 +231,8 @@ static void test_get_node_not_abs5()//get grand parent node
 }
 static void test_get_node_not_abs6()
 {
-    char node_path[200] = "test4";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,&node_path);
+    char* node_path = "test4";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D,node_path);
     if (res == NULL)
     {
         printf("SUCCESS-------------test_get_node_not_abs6");
@@ -240,8 +245,8 @@ static void test_get_node_not_abs6()
 }
 static void test_get_node_not_abs7()
 {
-    char node_path[200] = "../sib_test1";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,&node_path);
+    char* node_path = "../sib_test1";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,node_path);
     if (res == NULL)
     {
         printf("FAILED-------------test_get_node_not_abs7");
@@ -254,8 +259,8 @@ static void test_get_node_not_abs7()
 }
 static void test_get_node_not_abs8()
 {
-    char node_path[200] = "testsdazaza";
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,&node_path);
+    char* node_path = "testsdazaza";
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,node_path);
     if (res == NULL)
     {
         printf("SUCCESS-------------test_get_node_not_abs8");
@@ -269,22 +274,22 @@ static void test_get_node_not_abs8()
 
 static void test_get_node_not_abs9()
 {
-    char node_path[200] = "/public_root_2D/exist_not";
+    char* node_path = "/public_root_2D/exist_not";
 
-    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,&node_path);
+    Node* res = iCluige.iNode.get_node(iCluige.public_root_2D->children,node_path);
     if (res == NULL)
     {
         printf("SUCCESS-------------test_get_node_not_abs9");
     }
     else
     {
-        printf("FAILED-------------%s  -- %s", res->name, &node_path);
+        printf("FAILED-------------%s  -- %s", res->name, node_path);
     }
     printf("\n");
 }
 
 
-
+/*
 static void test_remove_child_0()
 {
     iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
@@ -317,6 +322,8 @@ static void test_remove_child_3()
     iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
     printf("\n");
 }
+
+*/
 
 static void test_get_child_count_0()
 {
@@ -364,7 +371,7 @@ static void test_is_ancestor_of0()
     bool res = iCluige.iNode.is_ancestor_of(iCluige.public_root_2D->children->children, iCluige.public_root_2D);
     if (res)
     {
-        printf("SUCCESS-------------\n", res);
+        printf("SUCCESS-------------\n");
     }
     else
     {
@@ -376,7 +383,7 @@ static void test_is_ancestor_of1()
     bool res = iCluige.iNode.is_ancestor_of(iCluige.public_root_2D->children->children, iCluige.public_root_2D->children);
     if (res)
     {
-        printf("SUCCESS-------------\n", res);
+        printf("SUCCESS-------------\n");
     }
     else
     {
@@ -388,7 +395,7 @@ static void test_is_ancestor_of2()
     bool res = iCluige.iNode.is_ancestor_of(iCluige.public_root_2D->children->children, iCluige.public_root_2D->children->next_sibling);
     if (!res)
     {
-        printf("SUCCESS-------------\n", res);
+        printf("SUCCESS-------------\n");
     }
     else
     {
@@ -400,7 +407,7 @@ static void test_is_ancestor_of3()
     bool res = iCluige.iNode.is_ancestor_of(iCluige.public_root_2D->children, iCluige.public_root_2D->children->children);
     if (!res)
     {
-        printf("SUCCESS-------------\n", res);
+        printf("SUCCESS-------------\n");
     }
     else
     {
@@ -412,7 +419,7 @@ static void test_is_ancestor_of4()
     bool res = iCluige.iNode.is_ancestor_of(iCluige.public_root_2D->children->next_sibling, iCluige.public_root_2D->children->children);
     if (!res)
     {
-        printf("SUCCESS-------------\n", res);
+        printf("SUCCESS-------------\n");
     }
     else
     {
@@ -458,16 +465,15 @@ static void make_all_tests()
     test_get_child_0();
     test_get_child_1();
     test_get_child_2();
-    //test_get_child_3();
+    test_get_child_3();
     test_get_child_4();
 
-    printf("\nTest remove_child() method ----------------------------------------------------------------------------- \n");
+    //printf("\nTest remove_child() method ----------------------------------------------------------------------------- \n");
     //test_remove_child_0();//can't test both at the same time
     //test_remove_child_1()
 
     printf("\nTest get_path() method -----------------------------------------------------------------------------\n");
 
-/*
     iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
     char* p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D->children);
     printf("\n%s", p);
@@ -482,15 +488,9 @@ static void make_all_tests()
     printf("\n%s", p);
     free(p);
 
-    /*
-    printf("\nTest queue_free() method -----------------------------------------------------------------------------\n");
-    iCluige.iNode.queue_free(iCluige.public_root_2D->children->children);
-    iCluige.iNode.queue_free(iCluige.public_root_2D->children->children);
-    iCluige.iNode.queue_free(iCluige.public_root_2D->children);
-    iCluige.iNode.queue_free(iCluige.public_root_2D);
-    iCluige.iNode._do_all_queue_free();
-    */
-    /*
+
+
+
     printf("\nTest get_child_count() method -----------------------------------------------------------------------------\n");
     iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
     test_get_child_count_0();
@@ -504,12 +504,20 @@ static void make_all_tests()
     test_is_ancestor_of3();
     test_is_ancestor_of4();
 
+    printf("\nTest queue_free() method -----------------------------------------------------------------------------\n");
+    iCluige.iNode.queue_free(iCluige.public_root_2D->children->children);
+    iCluige.iNode.queue_free(iCluige.public_root_2D->children->children);
+    iCluige.iNode.queue_free(iCluige.public_root_2D->children);
+    iCluige.iNode.queue_free(iCluige.public_root_2D);
+    iCluige.iNode._do_all_queue_free();
 
 
-*/
 }
+#endif // IN_TEST
 
 
+
+#ifdef IN_CAMERA_TEST
 int UP;
 int DOWN;
 int LEFT;
@@ -518,7 +526,7 @@ int ZOOM;
 SpriteSVG* godot_svg;
 Node2D* playerNode2D;
 
-char area[MAX_SIZE];
+char  area[MAX_SIZE];
 
 
 struct _PlayerScript
@@ -582,6 +590,48 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
         iCluige.iCamera2D.current_camera->zoom = (Vector2){0.5, 0.5};
     }
 
+    //DEBUG
+    char strPositionXPlayer[50], strPositionYPlayer[50], strPositionXSprite[50], strPositionYSprite[50]
+    ,strPosXCal[50], strPosYCal[50],strPosXCaliInter[50] ,strPosYCalInter[50];
+
+    sprintf(strPositionXPlayer,"%.2f",playerNode2D->position.x);
+    sprintf(strPositionYPlayer,"%.2f",playerNode2D->position.y);
+    sprintf(strPositionXSprite,"%.2f",godot_svg->_this_Node2D->position.x);
+    sprintf(strPositionYSprite,"%.2f",godot_svg->_this_Node2D->position.y);
+    /*
+    sprintf(strPosXCal,"%.2f",iCluige.iCamera2D.res_x_1);
+    sprintf(strPosYCal,"%.2f",iCluige.iCamera2D.res_y_1);
+
+    sprintf(strPosXCaliInter,"%.2f",iCluige.iCamera2D.res_x_2);
+    sprintf(strPosYCalInter,"%.2f",iCluige.iCamera2D.res_y_2);
+*/
+
+    char* debug_str = malloc(MAX_SIZE * sizeof(char));
+    strcpy(debug_str, "");
+    strcat(debug_str,strPositionXPlayer);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPositionYPlayer);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPositionXSprite);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPositionYSprite);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPosXCal);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPosYCal);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPosXCaliInter);
+    strcat(debug_str, ",");
+    strcat(debug_str,strPosYCalInter);
+    printf(debug_str);
+
+
+
+    Node* testnde = iCluige.iNode.get_child(playerNode2D->_this_Node,-1);
+    Node2D* test2D = (Node2D*) (testnde->_sub_class);
+    SpriteText* test_sprite_text = (SpriteText*) (test2D->_sub_class);
+    iCluige.iSpriteText.set_text(test_sprite_text,debug_str);
+    free(debug_str);
 
 
 }
@@ -615,32 +665,24 @@ static void inputs()
 
 static void create_area(int size)
 {
-    if (size < 1 || (size * (size + 1)) >= MAX_SIZE) {
+     if (size < 1 || (size * (size + 1)) >= MAX_SIZE)
+    {
         // Handle invalid size or size exceeding the buffer limit
         snprintf(area, MAX_SIZE, "Error: Invalid size or size exceeds buffer limit.\n");
         return;
     }
 
-    // Initialize the area array
-    memset(area, 0, sizeof(area));
-
-    // Seed the random number generator
-    srand(time(NULL));
-
     // Build the rectangle string
     char *ptr = area;
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            if (i == 0 || i == size - 1 || j == 0 || j == size - 1) {
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if (i == 0 || i == size - 1 || j == 0 || j == size - 1)
+            {
                 *ptr++ = '#'; // Border
             } else {
-                // Generate a random number to determine whether to use a '.' or a ' ' character
-                int random_num = rand() % 100;
-                if (random_num < 20) {
-                    *ptr++ = '.'; // Inside with a 20% chance of a '.' character
-                } else {
-                    *ptr++ = ' '; // Inside with an 80% chance of a ' ' character
-                }
+                *ptr++ = ' '; // Inside
             }
         }
         *ptr++ = '\n'; // Add a newline at the end of each row
@@ -668,10 +710,17 @@ static void launch()
     SpriteText* areaSpriteText = iCluige.iSpriteText.new_SpriteText();
 	Node* areaNode = areaSpriteText->_this_Node2D->_this_Node;
 	iCluige.iNode.set_name(areaNode, "Area");
-    iCluige.iSpriteText.set_text(areaSpriteText,&area);
+    iCluige.iSpriteText.set_text(areaSpriteText,area);
     iCluige.iNode2D.move_local(areaSpriteText->_this_Node2D, (Vector2){16, 16});
 	iCluige.iNode.add_child(gameRootRootNode, areaNode);
 
+	//Chest
+	SpriteSVG* chestSprite = iCluige.iSpriteSVG.new_SpriteSVG();
+	Node* chest_node = chestSprite->_this_Node2D->_this_Node;
+	iCluige.iNode.set_name(chest_node, "Chest");
+    iCluige.iSpriteSVG.parse_file(chestSprite,"chest.svg");
+    iCluige.iNode.add_child(gameRootRootNode,chest_node);
+    iCluige.iNode2D.move_local(chestSprite->_this_Node2D, (Vector2){5, -150});
 
 	//Title node
 	SpriteText* titleSpriteText = iCluige.iSpriteText.new_SpriteText();
@@ -707,12 +756,12 @@ static void launch()
     iCluige.iNode.add_child(playerNode,camNodeTest);
     //positionning the camera on the parent node
 
-    //iCluige.iCamera2D.set_enabled(camera,false);
-    //iCluige.iCamera2D.set_enabled(camera_test,false);
-    //iCluige.iCamera2D.set_enabled(camera_test,true);
-    //camera->zoom = (Vector2){1.5,1.5};
+    iCluige.iCamera2D.set_enabled(camera,false);
+    iCluige.iCamera2D.set_enabled(camera_test,false);
+    iCluige.iCamera2D.set_enabled(camera_test,true);
+    //camera_test->zoom = (Vector2){1.5,1.5};
 
-
+    //TODO use sprite text and message in it to debug
 
 
     godot_svg = iCluige.iSpriteSVG.new_SpriteSVG();
@@ -720,12 +769,20 @@ static void launch()
     // add to player the sprite node
     iCluige.iNode.add_child(playerNode, godot_svg->_this_Node2D->_this_Node);
     iCluige.iNode.set_name(godot_svg->_this_Node2D->_this_Node,"SpriteSVG2D");
-	iCluige.iSpriteSVG.parse_file(godot_svg,"C:/Users/Yvan/Documents/_COURS/STAGE/CLUIGE/test_cluige/minicat.svg");
+	iCluige.iSpriteSVG.parse_file(godot_svg,"minicat.svg");
 
     iCluige.iNode.print_tree_pretty(gameRootRootNode);
     printf("test");
 
     //iCluige.iNode2D.move_local(playerNode2D,(Vector2){-20., -20.});
+
+    SpriteText* test = iCluige.iSpriteText.new_SpriteText();
+    Node* test_node = test->_this_Node2D->_this_Node;
+
+
+
+
+    iCluige.iNode.add_child(playerNode,test_node);
 
 	newPlayer(playerNode);// attach script to The player node
 
@@ -749,6 +806,7 @@ static void launch()
 
 
 }
+#endif // IN_CAMERA_TEST
 int main()
 {
     //SetConsoleOutputCP(CP_UTF8);
@@ -756,13 +814,18 @@ int main()
     //init
 	cluige_init();//makes all roots, set all functions pointers, etc.
 
+
+
+    #ifdef IN_TEST
+    make_all_tests();
+    #endif // IN_TEST
+
+    #ifdef IN_CAMERA_TEST
     inputs();
     launch();
-
-
-    //make_all_tests();
-
     cluige_run();
+    #endif // IN_CAMERA_TEST
+
     printf("Finishing...\n");
     return cluige_finish();
 }
