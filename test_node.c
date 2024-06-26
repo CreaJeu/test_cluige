@@ -5,6 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 #define MAX_SIZE 1000000
+#define PI 3.1415926535897932
 
 // WRITE #define IN_CAMERA_TEST if you want to test the camera
 // WRITE #define IN_TEST  if you want to test node new functions
@@ -523,6 +524,11 @@ int DOWN;
 int LEFT;
 int RIGHT;
 int ZOOM;
+int ROT_90;
+int ROT_45;
+int ROT_180;
+int ROT_270;
+
 SpriteSVG* godot_svg;
 Node2D* playerNode2D;
 
@@ -547,7 +553,7 @@ PlayerScript* newPlayer(Node* this_Node)
     PlayerScript* newPlayer = iCluige.checked_malloc(sizeof(PlayerScript));
 
     newPlayer->this_Script = new_Script;
-    newPlayer->move_speed = 18;
+    newPlayer->move_speed = 10;
 
 
     new_Script->node = this_Node;
@@ -566,6 +572,7 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
         (PlayerScript*)(this_Script->_sub_class);
     struct iiInput* iii = &iCluige.iInput;
 
+    Camera2D* curr_cam = iCluige.iCamera2D.current_camera;
 
 
     //iCluige.iNode2D.move_local(godot_svg->_this_Node2D, (Vector2){0,1});
@@ -587,15 +594,33 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
     }
     if(iii->is_action_just_pressed(ZOOM))
     {
-        iCluige.iCamera2D.current_camera->zoom = (Vector2){0.5, 0.5};
+        iCluige.iCamera2D.set_zoom(curr_cam,(Vector2){0.25, 0.25});
+    }
+    if(iii->is_action_just_pressed(ROT_90))
+    {
+        iCluige.iCamera2D.set_zoom(curr_cam,(Vector2){2,2});
+    }
+    if(iii->is_action_just_pressed(ROT_180))
+    {
+        float angle = iCluige.iCamera2D.get_rotation(curr_cam);
+        iCluige.iCamera2D.set_rotation(curr_cam,angle += 10);
+    }
+    if(iii->is_action_just_pressed(ROT_45))
+    {
+        float angle = iCluige.iCamera2D.get_rotation(curr_cam);
+        iCluige.iCamera2D.set_rotation(curr_cam,angle -= 10);
+    }
+    if(iii->is_action_just_pressed(ROT_270))
+    {
+        curr_cam->rotation = 3 * PI / 2;
     }
 
     //DEBUG
     char strPositionXPlayer[50], strPositionYPlayer[50], strPositionXSprite[50], strPositionYSprite[50]
     ,strPosXCal[50], strPosYCal[50],strPosXCaliInter[50] ,strPosYCalInter[50];
 
-    sprintf(strPositionXPlayer,"%.2f",playerNode2D->position.x);
-    sprintf(strPositionYPlayer,"%.2f",playerNode2D->position.y);
+    sprintf(strPositionXPlayer,"%.2f",iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.x);
+    sprintf(strPositionYPlayer,"%.2f",iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.y);
     sprintf(strPositionXSprite,"%.2f",godot_svg->_this_Node2D->position.x);
     sprintf(strPositionYSprite,"%.2f",godot_svg->_this_Node2D->position.y);
     /*
@@ -634,6 +659,7 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
     free(debug_str);
 
 
+
 }
 
 
@@ -660,6 +686,24 @@ static void inputs()
     ZOOM = iCluige.iInput.add_action("ZOOM");
     iCluige.iInput.bind_key(ZOOM, 't');
     iCluige.iInput.bind_key(ZOOM, 'T');
+
+    ROT_90 = iCluige.iInput.add_action("ROT_90");
+    iCluige.iInput.bind_key(ROT_90, 'j');
+    iCluige.iInput.bind_key(ROT_90, 'J');
+
+    ROT_180 = iCluige.iInput.add_action("ROT_180");
+    iCluige.iInput.bind_key(ROT_180, 'k');
+    iCluige.iInput.bind_key(ROT_180, 'K');
+
+    ROT_45 = iCluige.iInput.add_action("ROT_45");
+    iCluige.iInput.bind_key(ROT_45, 'l');
+    iCluige.iInput.bind_key(ROT_45, 'L');
+
+    ROT_270 = iCluige.iInput.add_action("ROT_270");
+    iCluige.iInput.bind_key(ROT_270, 'm');
+    iCluige.iInput.bind_key(ROT_270, 'M');
+
+
 }
 
 
@@ -706,7 +750,8 @@ static void launch()
 
 
     //Box (area)
-    create_area(140);
+
+    create_area(30);
     SpriteText* areaSpriteText = iCluige.iSpriteText.new_SpriteText();
 	Node* areaNode = areaSpriteText->_this_Node2D->_this_Node;
 	iCluige.iNode.set_name(areaNode, "Area");
@@ -722,6 +767,7 @@ static void launch()
     iCluige.iNode.add_child(gameRootRootNode,chest_node);
     iCluige.iNode2D.move_local(chestSprite->_this_Node2D, (Vector2){5, -150});
 
+    /*
 	//Title node
 	SpriteText* titleSpriteText = iCluige.iSpriteText.new_SpriteText();
 	Node* titleNode = titleSpriteText->_this_Node2D->_this_Node;
@@ -729,6 +775,7 @@ static void launch()
     iCluige.iSpriteText.set_text(titleSpriteText,
     "                                               TEST FOR CAMERA2D NODE                              \n");
 	iCluige.iNode.add_child(gameRootRootNode, titleNode);
+	*/
 
     //Player node
 	playerNode2D = iCluige.iNode2D.new_Node2D();
@@ -743,7 +790,7 @@ static void launch()
 	Node* camNode = camera->_this_Node2D->_this_Node;
 	iCluige.iNode.set_name(camNode, "Camera");
     iCluige.iNode.add_child(playerNode,camNode);
-    camera->offset = (Vector2){-90,-45};
+
     //positionning the camera on the parent node
 
 
@@ -757,11 +804,19 @@ static void launch()
     //positionning the camera on the parent node
 
     iCluige.iCamera2D.set_enabled(camera,false);
-    iCluige.iCamera2D.set_enabled(camera_test,false);
-    iCluige.iCamera2D.set_enabled(camera_test,true);
-    //camera_test->zoom = (Vector2){1.5,1.5};
+    //iCluige.iCamera2D.set_enabled(camera_test,false);
+    //iCluige.iCamera2D.set_enabled(camera_test,true);
+    camera_test->anchor_mode = 0;
+    //camera_test->zoom = (Vector2){0.25,0.25};
+    camera_test->ignore_rotation = false;
+    //iCluige.iCamera2D.set_rotation(camera_test,-100.0);
+    //camera_test->offset = (Vector2){-40,-40};
+    //camera_test->limit_left = -30;
+    //camera_test->limit_top = -30;
 
-    //TODO use sprite text and message in it to debug
+
+
+
 
 
     godot_svg = iCluige.iSpriteSVG.new_SpriteSVG();
