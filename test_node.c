@@ -10,7 +10,7 @@
 // WRITE #define IN_CAMERA_TEST if you want to test the camera
 // WRITE #define IN_TEST  if you want to test node new functions
 
-
+//#define IN_TEST
 #define IN_CAMERA_TEST
 
 #ifdef IN_TEST
@@ -528,6 +528,7 @@ int ROT_90;
 int ROT_45;
 int ROT_180;
 int ROT_270;
+int EXIT_ACTION; // x
 
 SpriteSVG* godot_svg;
 Node2D* playerNode2D;
@@ -602,17 +603,21 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
     }
     if(iii->is_action_just_pressed(ROT_180))
     {
-        float angle = iCluige.iCamera2D.get_rotation(curr_cam);
-        iCluige.iCamera2D.set_rotation(curr_cam,angle += 10);
+        float angle = iCluige.iCamera2D.get_rotation_degrees(curr_cam);
+        iCluige.iCamera2D.set_rotation_degrees(curr_cam,angle += 10);
     }
     if(iii->is_action_just_pressed(ROT_45))
     {
-        float angle = iCluige.iCamera2D.get_rotation(curr_cam);
-        iCluige.iCamera2D.set_rotation(curr_cam,angle -= 10);
+        float angle = iCluige.iCamera2D.get_rotation_degrees(curr_cam);
+        iCluige.iCamera2D.set_rotation_degrees(curr_cam,angle -= 10);
     }
-    if(iii->is_action_just_pressed(ROT_270))
+//    if(iii->is_action_just_pressed(ROT_270))
+//    {
+//        curr_cam->rotation_radians = 3 * PI / 2;
+//    }
+    if(iii->is_action_just_pressed(EXIT_ACTION))
     {
-        curr_cam->rotation = 3 * PI / 2;
+        iCluige.quit_asked = true;
     }
 
     //DEBUG
@@ -703,7 +708,13 @@ static void inputs()
     iCluige.iInput.bind_key(ROT_270, 'm');
     iCluige.iInput.bind_key(ROT_270, 'M');
 
+    ROT_270 = iCluige.iInput.add_action("ROT_270");
+    iCluige.iInput.bind_key(ROT_270, 'm');
+    iCluige.iInput.bind_key(ROT_270, 'M');
 
+    EXIT_ACTION = iCluige.iInput.add_action("EXIT_ACTION");
+    iCluige.iInput.bind_key(EXIT_ACTION, 'x');
+    iCluige.iInput.bind_key(EXIT_ACTION, 'X');
 }
 
 
