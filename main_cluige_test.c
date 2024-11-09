@@ -6,7 +6,12 @@
 #include <stdlib.h>
 
 #include "common_test.h"
+
+//printf tests
 #include "node_test.h"
+#include "tscn_parser_test.h"
+
+//graphical tests
 #include "camera_test.h"
 
 // WRITE use "Debug graphical" build target if you want to test graphical things like camera
@@ -25,6 +30,7 @@ int main()
 
 	#ifdef IN_PRINTF_TEST
 	node_all_tests();
+	tscn_parser_all_tests();
 	#endif // IN_PRINTF_TEST
 
 	#ifdef IN_GRAPHICAL_TEST

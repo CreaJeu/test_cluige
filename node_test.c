@@ -436,7 +436,7 @@ static void test_is_ancestor_of4()
 
 void node_all_tests()
 {
-	printf("test");
+	printf("\n ----------------------------------------------------   -- start of Node tests\n");
 	Node* node1 = iCluige.iNode.new_Node();
 	iCluige.iNode.set_name(node1,"test1");
 
@@ -494,9 +494,6 @@ void node_all_tests()
 	printf("\n%s", p);
 	free(p);
 
-
-
-
 	printf("\nTest get_child_count() method -----------------------------------------------------------------------------\n");
 	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
 	test_get_child_count_0();
@@ -517,6 +514,7 @@ void node_all_tests()
 	iCluige.iNode.queue_free(iCluige.public_root_2D);
 	iCluige.iNode._do_all_queue_free();
 
+	printf("\n ----------------------------------------------------      end of Node tests --\n");
 }
 
 
