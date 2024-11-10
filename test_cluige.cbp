@@ -6,14 +6,13 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug printf">
+			<Target title="Debug">
 				<Option output="bin/Debug_printf/test_cluige" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug_printf/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-DIN_PRINTF_TEST" />
 				</Compiler>
 				<Linker>
 					<Add library="../cluige/bin/Debug/libcluige.a" />
@@ -32,20 +31,6 @@
 					<Add option="-s" />
 					<Add library="../cluige/bin/Release/libcluige.dll" />
 					<Add directory="../cluige/bin/Release" />
-				</Linker>
-			</Target>
-			<Target title="Debug graphical">
-				<Option output="bin/Debug_graphical/test_cluige" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug_graphical/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-					<Add option="-DIN_GRAPHICAL_TEST" />
-				</Compiler>
-				<Linker>
-					<Add library="../cluige/bin/Debug/libcluige.a" />
-					<Add directory="../cluige/bin/Debug" />
 				</Linker>
 			</Target>
 		</Build>
@@ -71,6 +56,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="node_test.h" />
+		<Unit filename="transition.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="transition.h" />
 		<Unit filename="tscn_parser_test.c">
 			<Option compilerVar="CC" />
 		</Unit>

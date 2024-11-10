@@ -16,7 +16,8 @@ int ROT_90;// J K L
 int ROT_45;
 int ROT_180;
 //int ROT_270;
-int EXIT_ACTION; // x
+int NEXT;
+//int EXIT_ACTION; // x
 
 
 

@@ -6,13 +6,11 @@
 #include <stdlib.h>
 
 #include "common_test.h"
+#include "transition.h"
 
 //printf tests
 #include "node_test.h"
 #include "tscn_parser_test.h"
-
-//graphical tests
-#include "camera_test.h"
 
 // WRITE use "Debug graphical" build target if you want to test graphical things like camera
 // WRITE use "Debug printf" build target if you want to test non graphical things like node names
@@ -28,18 +26,13 @@ int main()
 	//init
 	cluige_init();//makes all roots, set all functions pointers, etc.
 
-	#ifdef IN_PRINTF_TEST
+	init_transition();
+	//all graphical tests are launched from 'transition'
+	cluige_run();
+
+	//printf tests
 	node_all_tests();
 	tscn_parser_all_tests();
-	#endif // IN_PRINTF_TEST
-
-	#ifdef IN_GRAPHICAL_TEST
-	inputs_camera();
-	launch_camera();
-	cluige_run();
-	#endif // IN_GRAPHICAL_TEST
-
-	printf("Finishing...\n");
 
 	int finish = cluige_finish();
 //#ifdef IN_PRINTF_TEST

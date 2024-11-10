@@ -91,10 +91,6 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 //	{
 //		curr_cam->rotation_radians = 3 * PI / 2;
 //	}
-	if(iii->is_action_just_pressed(EXIT_ACTION))
-	{
-		iCluige.quit_asked = true;
-	}
 
 	//DEBUG
 	char strPositionXPlayer[50], strPositionYPlayer[50], strPositionXSprite[50], strPositionYSprite[50]
@@ -129,7 +125,7 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 	strcat(debug_str,strPosXCaliInter);
 	strcat(debug_str, ",");
 	strcat(debug_str,strPosYCalInter);
-	printf(debug_str);
+//	printf(debug_str);
 
 
 
@@ -183,10 +179,6 @@ void inputs_camera()
 //	ROT_270 = iCluige.iInput.add_action("ROT_270");
 //	iCluige.iInput.bind_key(ROT_270, 'm');
 //	iCluige.iInput.bind_key(ROT_270, 'M');
-
-	EXIT_ACTION = iCluige.iInput.add_action("EXIT_ACTION");
-	iCluige.iInput.bind_key(EXIT_ACTION, 'x');
-	iCluige.iInput.bind_key(EXIT_ACTION, 'X');
 }
 
 
@@ -309,8 +301,8 @@ void launch_camera()
 	iCluige.iNode.set_name(godot_svg->_this_Node2D->_this_Node,"SpriteSVG2D");
 	iCluige.iSpriteSVG.parse_file(godot_svg,"assets/minicat.svg");
 
-	iCluige.iNode.print_tree_pretty(gameRootRootNode);
-	printf("test");
+	//iCluige.iNode.print_tree_pretty(gameRootRootNode);
+	//printf("test");
 
 	//iCluige.iNode2D.move_local(playerNode2D,(Vector2){-20., -20.});
 
@@ -323,4 +315,11 @@ void launch_camera()
 	iCluige.iNode.add_child(playerNode,test_node);
 
 	newPlayer(playerNode);// attach script to The player node
+}
+
+void end_camera_test()
+{
+	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
+	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game");
+	iCluige.iNode.queue_free(game_root);
 }
