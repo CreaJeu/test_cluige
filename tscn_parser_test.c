@@ -300,7 +300,7 @@ static void test_SpriteSVG_instanciate()
 
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "scale", "Vector2(-1.45, .66)");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "zzzzzz", "fake to test");
-	iCluige.iSortedDictionary.insert(&placeholder_dico, "svg_file_path", "\"assets/stunjam2023eyes.svg\"");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "svg_file_path", "assets/stunjam2023eyes.svg");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "offset", "Vector2(-49.3, 42)");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"a sprite svg\"");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "visible", "false");

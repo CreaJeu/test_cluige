@@ -1,5 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b75aarxsf6n0o"]
 
+[ext_resource type="Texture2D" uid="uid://dmak3nk47diht" path="res://assets/stunjam2023eyes.svg" id="1_na813"]
+
 [ext_resource type="Script" path="res://Label.gd" id="1_4fevc"]
 
 [sub_resource type="Animation" id="Animation_1oibt"]
@@ -64,13 +66,13 @@ unAtrrString = "une valeur \"ou\" ouech"
 
 [node name="Un _ = Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1.445, -3.065)
-texture = SubResource("GradientTexture2D_rgkuh")
+texture = ExtResource("1_na813")
 offset = Vector2(39.21, 14.78)
-svg_file_path = "assets/stunjam2023eyes.svg"
+
 
 [node name="UnSousSprite2D" type="Sprite2D" parent="Un _ = Sprite2D"]
 process_mode = 4
-svg_file_path = "assets/stunjam2023eyes.svg"
+texture = ExtResource("1_na813")
 
 [node name="UnNode à = espace" type="Node" parent="Un _ = Sprite2D/UnSousSprite2D"]
 

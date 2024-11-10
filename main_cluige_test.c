@@ -40,6 +40,13 @@ int main()
 	#endif // IN_GRAPHICAL_TEST
 
 	printf("Finishing...\n");
-	return cluige_finish();
+
+	int finish = cluige_finish();
+//#ifdef IN_PRINTF_TEST
+//	utils_breakpoint_trick(NULL, true);
+	printf("\nThe End ! Press ENTER key to quit...\n");
+	getchar();
+//#endif // IN_PRINTF_TEST
+	return finish;
 }
 
