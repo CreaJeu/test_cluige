@@ -26,13 +26,24 @@ int main()
 	//init
 	cluige_init();//makes all roots, set all functions pointers, etc.
 
-	init_transition();
-	//all graphical tests are launched from 'transition'
-	cluige_run();
 
-	//printf tests
+	// == printf tests ==
+
 	node_all_tests();
 	tscn_parser_all_tests();
+
+	printf("\nEnd of printf tests. Press ENTER key to continue with graphical tests...\n");
+	getchar();
+
+
+	// == 'in-game' tests ==
+
+	//transition system : entry point of all graphical tests
+	//consisting of a Node with a Script
+	//input : 'n' to Next phase
+	init_transition();
+
+	cluige_run();
 
 	int finish = cluige_finish();
 //#ifdef IN_PRINTF_TEST

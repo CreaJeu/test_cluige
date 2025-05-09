@@ -93,13 +93,19 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 //	}
 
 	//DEBUG
-	char strPositionXPlayer[50], strPositionYPlayer[50], strPositionXSprite[50], strPositionYSprite[50]
-	,strPosXCal[50], strPosYCal[50],strPosXCaliInter[50] ,strPosYCalInter[50];
+	static char debug_str[100];
+	sprintf(debug_str, "%.2f,%.2f,%.2f,%.2f",
+		 iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.x,
+		 iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.y,
+		 godot_svg->_this_Node2D->position.x,
+		 godot_svg->_this_Node2D->position.y);
+//	static char strPositionXPlayer[50], strPositionYPlayer[50], strPositionXSprite[50], strPositionYSprite[50]
+//	,strPosXCal[50], strPosYCal[50],strPosXCaliInter[50] ,strPosYCalInter[50];
 
-	sprintf(strPositionXPlayer,"%.2f",iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.x);
-	sprintf(strPositionYPlayer,"%.2f",iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.y);
-	sprintf(strPositionXSprite,"%.2f",godot_svg->_this_Node2D->position.x);
-	sprintf(strPositionYSprite,"%.2f",godot_svg->_this_Node2D->position.y);
+//	sprintf(strPositionXPlayer,"%.2f",iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.x);
+//	sprintf(strPositionYPlayer,"%.2f",iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.y);
+//	sprintf(strPositionXSprite,"%.2f",godot_svg->_this_Node2D->position.x);
+//	sprintf(strPositionYSprite,"%.2f",godot_svg->_this_Node2D->position.y);
 	/*
 	sprintf(strPosXCal,"%.2f",iCluige.iCamera2D.res_x_1);
 	sprintf(strPosYCal,"%.2f",iCluige.iCamera2D.res_y_1);
@@ -108,32 +114,32 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 	sprintf(strPosYCalInter,"%.2f",iCluige.iCamera2D.res_y_2);
 */
 
-	char* debug_str = malloc(MAX_SIZE * sizeof(char));
-	strcpy(debug_str, "");
-	strcat(debug_str,strPositionXPlayer);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPositionYPlayer);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPositionXSprite);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPositionYSprite);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPosXCal);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPosYCal);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPosXCaliInter);
-	strcat(debug_str, ",");
-	strcat(debug_str,strPosYCalInter);
+//	static char* debug_str = malloc(MAX_SIZE * sizeof(char));
+//	strcpy(debug_str, "");
+//	strcat(debug_str,strPositionXPlayer);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPositionYPlayer);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPositionXSprite);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPositionYSprite);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPosXCal);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPosYCal);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPosXCaliInter);
+//	strcat(debug_str, ",");
+//	strcat(debug_str,strPosYCalInter);
 //	printf(debug_str);
 
 
-
-	Node* testnde = iCluige.iNode.get_child(playerNode2D->_this_Node,-1);
+	int last_sib_i = iCluige.iNode.get_child_count(playerNode2D->_this_Node) - 1;
+	Node* testnde = iCluige.iNode.get_child(playerNode2D->_this_Node, last_sib_i);
 	Node2D* test2D = (Node2D*) (testnde->_sub_class);
 	SpriteText* test_sprite_text = (SpriteText*) (test2D->_sub_class);
 	iCluige.iSpriteText.set_text(test_sprite_text,debug_str);
-	free(debug_str);
+	//free(debug_str);
 
 
 
@@ -307,6 +313,7 @@ void launch_camera()
 	//iCluige.iNode2D.move_local(playerNode2D,(Vector2){-20., -20.});
 
 	SpriteText* test = iCluige.iSpriteText.new_SpriteText();
+	iCluige.iSpriteText.set_text(test, "");
 	Node* test_node = test->_this_Node2D->_this_Node;
 
 

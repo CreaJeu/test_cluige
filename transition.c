@@ -12,7 +12,8 @@ struct _TransitionScript
 {
 	Script* this_Script;
 	int next;
-	Node* helpSprite;
+	Node2D* help_Node2D;
+	SpriteText* help_SpriteText;
 };
 typedef struct _TransitionScript TransitionScript;
 
@@ -29,7 +30,8 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 		if(this_Transition->next == 0)
 		{
 			this_Transition->next++;
-			iCluige.iNode.queue_free(this_Transition->helpSprite);
+			//iCluige.iNode.queue_free(this_Transition->helpSprite);
+			iCluige.iNode2D.hide(this_Transition->help_Node2D);
 			inputs_camera();
 			launch_camera();
 		}
@@ -37,6 +39,12 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 		{
 			this_Transition->next++;
 			end_camera_test();
+			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
+"\
+ ~ End of last test ~\n\
+ \n\
+ Exit : N");
+			iCluige.iNode2D.show(this_Transition->help_Node2D);
 		}
 		else if(this_Transition->next == 2)
 		{
@@ -63,17 +71,27 @@ TransitionScript* newTransition(Node* this_Node)
 	new_Script->_sub_class = newTransition;
 	this_Node->script = new_Script;
 
-	SpriteText* helpSpriteText = iCluige.iSpriteText.new_SpriteText();
-	Node2D* helpNode2D = helpSpriteText->_this_Node2D;
-	Node* helpNode = helpNode2D->_this_Node;
-	newTransition->helpSprite = helpNode2D->_this_Node;
-	iCluige.iSpriteText.set_text(helpSpriteText,
-//		" ~ instructions ~\n Next phase : N\n eXit       : X\n");
-		" ~ instructions ~\n Next phase : N\n");
+	SpriteText* help_SpriteText = iCluige.iSpriteText.new_SpriteText();
+	Node2D* help_Node2D = help_SpriteText->_this_Node2D;
+	Node* help_Node = help_Node2D->_this_Node;
+	newTransition->help_Node2D = help_Node2D;
+	newTransition->help_SpriteText = help_SpriteText;
+	iCluige.iSpriteText.set_text(help_SpriteText,
+"\
+ Test 1 : Camera\
+ \n\n\
+ ~ instructions ~\n\
+ Move Camera : ZQSD\n\
+ Zoom : T\n\
+ ROT_45 : L\n\
+ ROT_90 : J\n\
+ ROT_180 : K\n\
+ \n\
+ Next phase : N");
 //	Camera2D* cam = iCluige.iCamera2D.current_camera;
 //	Node2D* camNde2D = cam->_this_Node2D;
-	iCluige.iNode.add_child(this_Node, helpNode);
-	iCluige.iNode2D.set_local_position(helpNode2D, (Vector2){ 6, 4 });
+	iCluige.iNode.add_child(this_Node, help_Node);
+	iCluige.iNode2D.set_local_position(help_Node2D, (Vector2){ 6, 4 });
 	return newTransition;
 }
 

@@ -647,16 +647,16 @@ static void test_pksc_instanciate()
 void tscn_parser_all_tests()
 {
 	printf("\n ----------------------------------------------------   -- start of tscn_parser tests\n");
-	printf("\nTest utils_*_from_parsed methods -----------------------------------------------------------------------------\n");
+	//printf("Test utils_*_from_parsed methods -----------------------------------------------------------------------------\n");
 	test_utils_bool_from_parsed();
 	test_utils_char_from_parsed();
 	test_utils_str_from_parsed();
 
-	printf("\nTest parsing methods -----------------------------------------------------------------------------\n");
+	//printf("Test parsing methods -----------------------------------------------------------------------------\n");
 	test_FileLineReader();
 	test_TscnParser();
 
-	printf("\nTest instanciate methods -----------------------------------------------------------------------------\n");
+	//printf("Test instanciate methods -----------------------------------------------------------------------------\n");
 	SortedDictionary parse_placeholder;
 	iCluige.iSortedDictionary.sorted_dictionary_alloc(&parse_placeholder, VT_POINTER, VT_POINTER, 10);
 	iCluige.iSortedDictionary.set_compare_keys_func(&parse_placeholder, iCluige.iDeque.default_compare_string_func);
@@ -675,7 +675,15 @@ void tscn_parser_all_tests()
 	test_SpriteSVG_instanciate();
 	test_pksc_instanciate();
 
-	printf("\n ----------------------------------------------------	  end of tscn_parser tests --\n");
+	int count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
+	for(int i = 0; i<count; i++)
+	{
+		Node* child_i = iCluige.iNode.get_child(iCluige.public_root_2D, i);
+		iCluige.iNode.queue_free(child_i);
+	}
+	iCluige.iNode._do_all_queue_free();//clears all public_root_2D children for a fresh start
+
+	//printf(" ----------------------------------------------------	  end of tscn_parser tests --\n");
 }
 
 
