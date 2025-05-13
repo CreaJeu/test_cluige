@@ -455,6 +455,71 @@ static void test_is_ancestor_of4()
 	}
 }
 
+static void test_remove()
+{
+	Node* nodes[8];
+	char* names[8] = {"keep1", "keep2", "remove1", "keep3", "keep4", "sub0", "sub1", "sub2"};
+	for(int i=0; i<8; i++)
+	{
+		nodes[i] = iCluige.iNode.new_Node();
+		iCluige.iNode.set_name(nodes[i],names[i]);
+		if(i<5)
+		{
+			iCluige.iNode.add_child(iCluige.public_root_2D, nodes[i]);
+		}
+		else
+		{
+			iCluige.iNode.add_child(nodes[2], nodes[i]);
+		}
+
+	}
+//	iCluige.iNode.print_tree_pretty(iCluige._private_root_2D);
+
+	int count;
+	for(int i=5; i<8; i++)
+	{
+		iCluige.iNode.remove_child(nodes[2], nodes[i]);
+		count = iCluige.iNode.get_child_count(nodes[2]);
+		int wanted_count = 3 - (i - 4);
+		if (count != wanted_count)
+		{
+			printf("-----FAILED--------should be %i, is %i | test_remove sub%i\n", wanted_count, count, wanted_count);
+		}
+//		iCluige.iNode.print_tree_pretty(iCluige._private_root_2D);
+	}
+
+	iCluige.iNode.remove_child(iCluige.public_root_2D, nodes[2]);
+	count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
+	if (count != 7)
+	{
+		printf("-----FAILED--------should be 7, is %i | test_remove1\n", count);
+	}
+//	iCluige.iNode.print_tree_pretty(iCluige._private_root_2D);
+
+	for(int i=4; i>=3; i--)
+	{
+		iCluige.iNode.remove_child(iCluige.public_root_2D, nodes[i]);
+	}
+	count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
+	if (count != 5)
+	{
+		printf("-----FAILED--------should be 5, is %i | test_remove2\n", count);
+	}
+//	iCluige.iNode.print_tree_pretty(iCluige._private_root_2D);
+
+	for(int i=0; i<2; i++)
+	{
+		iCluige.iNode.remove_child(iCluige.public_root_2D, nodes[i]);
+	}
+	count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
+	if (count != 3)
+	{
+		printf("-----FAILED--------should be 3, is %i | test_remove3\n", count);
+	}
+	//tree is back like before this function
+//	iCluige.iNode.print_tree_pretty(iCluige._private_root_2D);
+}
+
 static void test_queue_free()
 {
 //	iCluige.iNode.print_tree_pretty(iCluige.private_root_2D);
@@ -468,6 +533,7 @@ static void test_queue_free()
 	}
 	//iCluige.iNode.queue_free(iCluige.public_root_2D);
 	iCluige.iNode._do_all_queue_free();
+//	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
 	count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
 	if (count == 0)
 	{
@@ -533,18 +599,31 @@ void node_all_tests()
 	//printf("Test get_path() method -----------------------------------------------------------------------------\n");
 
 	//iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
+	StringBuilder sb;
+	char* test_gpm = iCluige.iStringBuilder.string_alloc(&sb, 555);
 	char* p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D->children);
-	printf("%s\n", p);
+	iCluige.iStringBuilder.append(&sb, "%s\n", p);
 	free(p);
 	p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D);
-	printf("%s\n", p);
+	iCluige.iStringBuilder.append(&sb, "%s\n", p);
 	free(p);
 	p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D->children->next_sibling);
-	printf("%s\n", p);
+	iCluige.iStringBuilder.append(&sb, "%s\n", p);
 	free(p);
 	p = iCluige.iNode.get_path_mallocing(iCluige.public_root_2D->children->children);
-	printf("%s\n", p);
+	iCluige.iStringBuilder.append(&sb, "%s\n", p);
 	free(p);
+	if(!str_equals(
+		test_gpm,
+"/public_root_2/test1\n\
+/public_root_2\n\
+/public_root_2/sib_test1\n\
+/public_root_2/test1/child_test1\n\
+"
+		))
+	{
+		printf("-----FAILED-------- is :\n%s | test get_path_mallocing\n", test_gpm);
+	}
 
 	//printf("Test get_child_count() method -----------------------------------------------------------------------------\n");
 	//iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
@@ -560,6 +639,8 @@ void node_all_tests()
 	test_is_ancestor_of4();
 
 	//printf("Test queue_free() method -----------------------------------------------------------------------------\n");
+	test_remove();
+	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
 	test_queue_free();//clears all public_root_2D children for a fresh start
 
 	//printf(" ----------------------------------------------------      end of Node tests --\n");
