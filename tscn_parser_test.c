@@ -675,13 +675,13 @@ void tscn_parser_all_tests()
 	test_SpriteSVG_instanciate();
 	test_pksc_instanciate();
 
+	//clear all public_root_2D children for a fresh start
 	int count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
 	for(int i = 0; i<count; i++)
 	{
 		Node* child_i = iCluige.iNode.get_child(iCluige.public_root_2D, i);
 		iCluige.iNode.queue_free(child_i);
 	}
-	iCluige.iNode._do_all_queue_free();//clears all public_root_2D children for a fresh start
 
 	//printf(" ----------------------------------------------------	  end of tscn_parser tests --\n");
 }

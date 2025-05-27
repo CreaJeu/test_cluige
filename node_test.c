@@ -532,7 +532,8 @@ static void test_queue_free()
 		iCluige.iNode.queue_free(child_i);
 	}
 	//iCluige.iNode.queue_free(iCluige.public_root_2D);
-	iCluige.iNode._do_all_queue_free();
+	iCluige.iNode._do_all_queue_free_early_step();
+	iCluige.iNode._do_all_queue_free_late_step();
 //	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
 	count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
 	if (count == 0)

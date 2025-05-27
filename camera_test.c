@@ -94,7 +94,7 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 
 	//DEBUG
 	static char debug_str[100];
-	sprintf(debug_str, "%.2f,%.2f,%.2f,%.2f",
+	sprintf(debug_str, "%.2f, %.2f, %.2f, %.2f",
 		 iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.x,
 		 iCluige.iCamera2D.current_camera->_tmp_limited_offseted_global_position.y,
 		 godot_svg->_this_Node2D->position.x,
@@ -222,7 +222,7 @@ static void create_area(int size)
 
 void launch_camera()
 {
-
+//	iCluige.wanted_frame_seconds = 1.666;
 
 	//gameroot node
 	Node2D* gameRootNode2D = iCluige.iNode2D.new_Node2D();
@@ -309,6 +309,7 @@ void launch_camera()
 	iCluige.iNode.add_child(playerNode, godot_svg->_this_Node2D->_this_Node);
 	iCluige.iNode.set_name(godot_svg->_this_Node2D->_this_Node,"SpriteSVG2D");
 	iCluige.iSpriteSVG.parse_file(godot_svg,"assets/minicat.svg");
+	iCluige.iNode2D.move_local(godot_svg->_this_Node2D,(Vector2){0., 2.});
 
 	//iCluige.iNode.print_tree_pretty(gameRootRootNode);
 	//printf("test");
