@@ -17,6 +17,7 @@ int ROT_45;
 int ROT_180;
 //int ROT_270;
 int NEXT;
+int JUMP;
 //int EXIT_ACTION; // x
 
 

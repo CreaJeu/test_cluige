@@ -287,9 +287,10 @@ void launch_camera()
 	iCluige.iNode.add_child(playerNode,camNodeTest);
 	//positionning the camera on the parent node
 
-	iCluige.iCamera2D.set_enabled(camera,false);
-	//iCluige.iCamera2D.set_enabled(camera_test,false);
-	//iCluige.iCamera2D.set_enabled(camera_test,true);
+//	iCluige.iCamera2D.set_enabled(camera,false);
+//	//iCluige.iCamera2D.set_enabled(camera_test,false);
+//	//iCluige.iCamera2D.set_enabled(camera_test,true);
+	iCluige.iCamera2D.make_current(camera_test);
 	camera_test->anchor_mode = 0;
 	//camera_test->zoom = (Vector2){0.25,0.25};
 	camera_test->ignore_rotation = false;

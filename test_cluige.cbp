@@ -61,6 +61,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="transition.h" />
+		<Unit filename="tree_test.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tree_test.h" />
 		<Unit filename="tscn_parser_test.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -5,6 +5,7 @@
 #include "transition.h"
 
 //graphical tests
+#include "tree_test.h"
 #include "camera_test.h"
 
 
@@ -30,12 +31,37 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 		if(this_Transition->next == 0)
 		{
 			this_Transition->next++;
+			iCluige.iNode2D.hide(this_Transition->help_Node2D);
+			inputs_tree_test();
+			launch_tree_test();
+		}
+		else if(this_Transition->next == 1)
+		{
+			this_Transition->next++;
+			end_tree_test();
+			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
+"\
+ Test 2 : Camera\
+ \n\n\
+ ~ instructions ~\n\
+ Move Camera : ZQSD\n\
+ Zoom : T\n\
+ ROT_45 : L\n\
+ ROT_90 : J\n\
+ ROT_180 : K\n\
+ \n\
+ Next phase : N");
+			iCluige.iNode2D.show(this_Transition->help_Node2D);
+		}
+		if(this_Transition->next == 2)
+		{
+			this_Transition->next++;
 			//iCluige.iNode.queue_free(this_Transition->helpSprite);
 			iCluige.iNode2D.hide(this_Transition->help_Node2D);
 			inputs_camera();
 			launch_camera();
 		}
-		else if(this_Transition->next == 1)
+		else if(this_Transition->next == 3)
 		{
 			this_Transition->next++;
 			end_camera_test();
@@ -46,7 +72,7 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
  Exit : N");
 			iCluige.iNode2D.show(this_Transition->help_Node2D);
 		}
-		else if(this_Transition->next == 2)
+		else if(this_Transition->next == 4)
 		{
 			iCluige.iNode.queue_free(this_Script->node);
 			iCluige.quit_asked = true;
@@ -78,16 +104,11 @@ TransitionScript* newTransition(Node* this_Node)
 	newTransition->help_SpriteText = help_SpriteText;
 	iCluige.iSpriteText.set_text(help_SpriteText,
 "\
- Test 1 : Camera\
+ Test 1 : Tree\
  \n\n\
  ~ instructions ~\n\
- Move Camera : ZQSD\n\
- Zoom : T\n\
- ROT_45 : L\n\
- ROT_90 : J\n\
- ROT_180 : K\n\
  \n\
- Next phase : N");
+ start test : N");
 //	Camera2D* cam = iCluige.iCamera2D.current_camera;
 //	Node2D* camNde2D = cam->_this_Node2D;
 	iCluige.iNode.add_child(this_Node, help_Node);

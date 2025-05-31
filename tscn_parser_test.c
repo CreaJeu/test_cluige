@@ -142,11 +142,16 @@ static void test_Node_instanciate()
 
 	//Node* res2 = iCluige.iNode.new_Node();
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"azertyuiop\"");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "process_priority", "-42");
 	//iCluige.iNode.deserialize_dico(res2, &placeholder_dico);
 	Node* res2 = fcty->instanciate(&placeholder_dico);
 	if(res2 == NULL || 0 != strcmp(res2->name, "azertyuiop"))
 	{
 		printf("FAILED --- should be \"azertyuiop\"  | test_Node_instanciate 2\n ");
+	}
+	if(res2 == NULL || res2->process_priority != -42)
+	{
+		printf("FAILED --- should be -42  | test_Node_instanciate 3\n ");
 	}
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 //	res->delete_Node(res);//calls free(res);
@@ -353,6 +358,91 @@ static void test_SpriteSVG_instanciate()
 	Vector2* point0 = (Vector2*)(iCluige.iDeque.at(&(path->_points), 0).ptr);
 	utils_breakpoint_trick(point0, false);
 
+	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
+	res2->_this_Node2D->_this_Node->delete_Node(res2->_this_Node2D->_this_Node);//calls free(res2) and recursiv
+}
+
+static void test_Camera2D_instanciate()
+{
+	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
+	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Camera2D");
+	if(!(cv_fcty.valid))
+	{
+		printf("FAILED --- Camera2D not in factories  | test_Camera2D_instanciate\n ");
+	}
+	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
+	if((fcty->instanciate) == NULL)
+	{
+		printf("FAILED --- uninitialized Camera2D factory function  | test_Camera2D_instanciate\n ");
+	}
+
+	SortedDictionary placeholder_dico;
+	iCluige.iSortedDictionary.sorted_dictionary_alloc(&placeholder_dico, VT_POINTER, VT_POINTER, 13);
+	iCluige.iSortedDictionary.set_compare_keys_func(&placeholder_dico, iCluige.iDeque.default_compare_string_func);
+
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "rotation", "1.58825");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "zzzzzz", "fake to test");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "offset", "Vector2(1.105, -3.255)");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "anchor_mode", "0");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"a camera2D\"");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "ignore_rotation", "false");
+//	iCluige.iSortedDictionary.insert(&placeholder_dico, "enabled", "false");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "zoom", "Vector2(2.325, -3.52)");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "limit_left", "-10002950");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "limit_top", "-9998460");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "limit_right", "9999395");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "limit_bottom", "10000850");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "position", "Vector2(2.265, -3.2)");
+
+	Node* res2_n = fcty->instanciate(&placeholder_dico);
+	Node2D* res2_n2d = (Node2D*)(res2_n->_sub_class);
+	Camera2D* res2 = (Camera2D*)(res2_n2d->_sub_class);
+	if(0 != strcmp(res2->_this_Node2D->_this_Node->name, "a camera2D"))
+	{
+		printf("FAILED --- should be \"a camera2D\"  | test_Camera2D_instanciate 1\n ");
+	}
+	Vector2 v = (Vector2){1.105, -3.255};
+	if(!iCluige.iVector2.is_equal_approx(&(res2->offset), &v))
+	{
+		printf("FAILED --- should be (1.105, -3.255)  | test_Camera2D_instanciate 2\n ");
+	}
+//	if(res2->enabled)
+//	{
+//		printf("FAILED --- should be false  | test_Camera2D_instanciate 3\n ");
+//	}
+	if(res2->ignore_rotation)
+	{
+		printf("FAILED --- should be false  | test_Camera2D_instanciate 4\n ");
+	}
+	if(!is_equal_approx(res2->rotation_radians, 1.58825))
+	{
+		printf("FAILED --- should be 1.58825  | test_Camera2D_instanciate 5\n ");
+	}
+	v = (Vector2){2.325, -3.52};
+	if(!iCluige.iVector2.is_equal_approx(&(res2->zoom), &v))
+	{
+		printf("FAILED --- should be (2.325, -3.52)  | test_Camera2D_instanciate 6\n ");
+	}
+	if(!is_equal_approx(res2->limit_top, -9998460))
+	{
+		printf("FAILED --- should be -9998460  | test_Camera2D_instanciate 7\n ");
+	}
+	if(!is_equal_approx(res2->limit_right, 9999395))
+	{
+		printf("FAILED --- should be 9999395  | test_Camera2D_instanciate 8\n ");
+	}
+	if(!is_equal_approx(res2->limit_left, -10002950))
+	{
+		printf("FAILED --- should be -10002950  | test_Camera2D_instanciate 9\n ");
+	}
+	if(!is_equal_approx(res2->limit_bottom, 10000850))
+	{
+		printf("FAILED --- should be 10000850  | test_Camera2D_instanciate 10\n ");
+	}
+	if(res2->anchor_mode != 0)
+	{
+		printf("FAILED --- should be 0  | test_Camera2D_instanciate 11\n ");
+	}
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 	res2->_this_Node2D->_this_Node->delete_Node(res2->_this_Node2D->_this_Node);//calls free(res2) and recursiv
 }
@@ -673,6 +763,7 @@ void tscn_parser_all_tests()
 	test_Node2D_instanciate();
 	test_SpriteText_instanciate();
 	test_SpriteSVG_instanciate();
+	test_Camera2D_instanciate();
 	test_pksc_instanciate();
 
 	//clear all public_root_2D children for a fresh start
