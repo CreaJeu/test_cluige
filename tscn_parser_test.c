@@ -262,17 +262,17 @@ static void test_SpriteText_instanciate()
 	{
 		printf("FAILED --- should be -3.2  | test_SpriteText_instanciate 5\n ");
 	}
-	gap = fabs(res2->offset.x - -49.3);
+	gap = fabs(res2->_new_baked.offset.x - -49.3);
 	if(gap > .0001)
 	{
 		printf("FAILED --- should be -49.3  | test_SpriteText_instanciate 6\n ");
 	}
-	gap = fabs(res2->offset.y - 42);
+	gap = fabs(res2->_new_baked.offset.y - 42);
 	if(gap > .0001)
 	{
 		printf("FAILED --- should be 42  | test_SpriteText_instanciate 7\n ");
 	}
-	if(0 != strcmp(res2->text, "un es\"sai\0 de te\"xte\0\0multiligne"))
+	if(0 != strcmp(res2->_new_baked.text, "un es\"sai\n de te\"xte\n\nmultiligne"))
 	{
 		printf("FAILED --- should be \"un es\"sai...\"  | test_SpriteText_instanciate 8\n ");
 	}
@@ -591,7 +591,7 @@ static const Node* test_node_against_packed_scene(const Node* n, const PackedSce
 		}
 	}
 	const Node2D* n_2D = (const Node2D*)(n->_sub_class);
-	if(strncmp(n->_class_name, "NodeNode2D", 10) == 0)
+	if(strncmp(n->_class_name, "NodeNode2D", strlen("NodeNode2D")) == 0)
 	{
 		bool ps_visible;
 		found = utils_bool_from_parsed(&ps_visible, &(ps->dico_node), "visible");
@@ -612,14 +612,17 @@ static const Node* test_node_against_packed_scene(const Node* n, const PackedSce
 			}
 		}
 	}
-	if(strncmp(n->_class_name, "NodeNode2DSpriteText", 10) == 0)
+	if(strncmp(n->_class_name, "NodeNode2DSpriteText", strlen("NodeNode2DSpriteText")) == 0)
 	{
 		const SpriteText* n_SprtTxt = (const SpriteText*)(n_2D->_sub_class);
 		Vector2 ps_offset;
 		found = utils_vector2_from_parsed(&ps_offset, &(ps->dico_node), "offset");
 		if(found)
 		{
-			if(iCluige.iVector2.distance_squared_to(&ps_offset, &(n_SprtTxt->offset)) > iCluige.EPSILON)
+			if(iCluige.iVector2.distance_squared_to(
+					&ps_offset,
+					&(n_SprtTxt->_new_baked.offset)
+				) > iCluige.EPSILON)
 			{
 				return n;
 			}
@@ -628,14 +631,14 @@ static const Node* test_node_against_packed_scene(const Node* n, const PackedSce
 		found = utils_str_from_parsed(&ps_txt, &(ps->dico_node), "text");
 		if(found)
 		{
-			int first_line_len = strlen(n_SprtTxt->text);
-			if(strncmp(ps_txt, n_SprtTxt->text, first_line_len) != 0)
+			int first_line_len = strlen(n_SprtTxt->_new_baked.text);
+			if(strncmp(ps_txt, n_SprtTxt->_new_baked.text, first_line_len) != 0)
 			{
 				return n;
 			}
 		}
 	}
-	else if(strncmp(n->_class_name, "NodeNode2DSpriteSVG", 10) == 0)
+	else if(strncmp(n->_class_name, "NodeNode2DSpriteSVG", strlen("NodeNode2DSpriteSVG")) == 0)
 	{
 		const SpriteSVG* n_SprtSVG = (const SpriteSVG*)(n_2D->_sub_class);
 		Vector2 ps_offset;
@@ -691,8 +694,6 @@ static void test_pksc_instanciate()
 //	char* dbg = iCluige.iPackedScene.debug_recrusive(parser.scene_root, NULL);
 	PackedScene* ps = parser.scene_root;
 	Node* my_game_root_node = iCluige.iPackedScene.instanciate(ps);
-	iCluige.iNode.add_child(iCluige.public_root_2D, my_game_root_node);
-	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
 
 //	Node2D* zzzzzzz = (Node2D*)(my_game_root_node->_sub_class);
 //	iCluige.iNode2D.move_local(zzzzzzz, (Vector2){ 1.f, 1.f });

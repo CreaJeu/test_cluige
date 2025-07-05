@@ -138,7 +138,7 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 	Node* testnde = iCluige.iNode.get_child(playerNode2D->_this_Node, last_sib_i);
 	Node2D* test2D = (Node2D*) (testnde->_sub_class);
 	SpriteText* test_sprite_text = (SpriteText*) (test2D->_sub_class);
-	if(!str_equals(debug_str, test_sprite_text->text))
+	if(!str_equals(debug_str, test_sprite_text->_new_baked.text))
 	{
 		iCluige.iSpriteText.set_text(test_sprite_text,debug_str);
 	}
