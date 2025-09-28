@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbrjpx3ngtq8x"]
+
+[ext_resource type="PackedScene" uid="uid://dx2d3l3hlb0sx" path="res://assets/cello.tscn" id="1_2u1iy"]
+
+[node name="orchestre" type="Node2D"]
+
+[node name="left_cello" parent="." instance=ExtResource("1_2u1iy")]
+offset_left = 33.0
+offset_top = 57.0
+offset_right = 89.0
+offset_bottom = 80.0
+
+[node name="right_cello" parent="." instance=ExtResource("1_2u1iy")]
+offset_left = 283.0
+offset_top = 29.0
+offset_right = 339.0
+offset_bottom = 52.0
+
+[node name="right_partition" type="Label" parent="right_cello"]
+layout_mode = 0
+offset_left = 124.0
+offset_top = 142.0
+offset_right = 188.0
+offset_bottom = 165.0
+text = "do re mi"

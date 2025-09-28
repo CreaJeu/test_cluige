@@ -522,7 +522,7 @@ static void test_FileLineReader()
 static void test_TscnParser()
 {
 	TscnParser parser;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_TscnParser.tscn");//"autre_instancieur.tscn");//"test_tscn_parser.tscn");//"main.tscn = avec instanced = todo later");//
+	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_TscnParser.tscn");
 //	bool ok = parser.read_line(&parser);
 //	ok = parser.read_line(&parser);
 //	ok = parser.ignore_non_node(&parser);
@@ -574,8 +574,8 @@ static void test_TscnParser()
 	}
 	iCluige.iFileLineReader.close_file(&wanted_res_flr);
 	iCluige.iFileLineReader.pre_delete_FileLineReader(&wanted_res_flr);
-	iCluige.iPackedScene.pre_delete_PackedScene(parser.scene_root);
-	free(parser.scene_root);
+//	iCluige.iPackedScene.pre_delete_PackedScene(parser.scene_root);
+//	free(parser.scene_root);
 	free(dbg);
 }
 
@@ -692,7 +692,16 @@ static void test_pksc_instanciate()
 	bool ok = parser.parse_scene(&parser);
 	utils_breakpoint_trick(&ok, false);
 //	char* dbg = iCluige.iPackedScene.debug_recrusive(parser.scene_root, NULL);
-	PackedScene* ps = parser.scene_root;
+
+	SortedDictionary* path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
+	Checked_Variant cv = iCluige.iSortedDictionary.get(
+			path_to_ps, "assets/test_pksc_instanciate.tscn");
+	if(!(cv.valid) || cv.v.ptr != parser.scene_root)
+	{
+		printf("FAILED ---  parsed scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate\n ");
+	}
+	PackedScene* ps = (PackedScene*)(cv.v.ptr);
+
 	Node* my_game_root_node = iCluige.iPackedScene.instanciate(ps);
 
 //	Node2D* zzzzzzz = (Node2D*)(my_game_root_node->_sub_class);
@@ -730,10 +739,155 @@ static void test_pksc_instanciate()
 		free(pp);
 	}
 
-	iCluige.iPackedScene.pre_delete_PackedScene(ps);
+//	iCluige.iPackedScene.pre_delete_PackedScene(ps);
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser);
 }
 
+static void test_pksc_instanciate_with_instance()
+{
+	//sub-scene
+	TscnParser parser_note;
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_note, "assets/note.tscn");
+	bool ok = parser_note.parse_scene(&parser_note);
+	utils_breakpoint_trick(&ok, false);
+
+	SortedDictionary* path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
+	Checked_Variant cv = iCluige.iSortedDictionary.get(
+			path_to_ps, "assets/note.tscn");
+	if(!(cv.valid) || cv.v.ptr != parser_note.scene_root)
+	{
+		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+	}
+	PackedScene* ps = (PackedScene*)(cv.v.ptr);
+	char* dbg = iCluige.iPackedScene.debug_recrusive(ps, NULL);
+	//printf("test_pksc_instanciate_with_instance : \n%s\n\n", dbg);
+	char* wanted_dbg =
+"name = note_Node2D\n\
+type = Sprite2D\n\
+parent =\n\
+scale = Vector2(1.475, 1.475)\n\
+script = ExtResource(\"2_4b6m6\")\n\
+svg_file_path = assets/note.svg\n\
+ - children : 0\n\n";
+	if(!str_equals(dbg, wanted_dbg))
+	{
+		printf("FAILED --- 'note' packed scene is different from expected  | test_pksc_instanciate_with_instance\n");
+	}
+	free(dbg);
+	iCluige.iTscnParser.pre_delete_TscnParser(&parser_note);
+
+	//mid-scene
+	TscnParser parser_cello;
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_cello, "assets/cello.tscn");
+	ok = parser_cello.parse_scene(&parser_cello);
+	utils_breakpoint_trick(&ok, false);
+//	Pair* pr = (Pair*)(iCluige.iDeque.at(&(parser_cello._dico_id_to_path._pairs), 0).ptr);
+//	dbg = (char*)(pr->second.ptr);
+	cv = iCluige.iSortedDictionary.get(
+			path_to_ps, "assets/cello.tscn");
+	if(!(cv.valid) || cv.v.ptr != parser_cello.scene_root)
+	{
+		printf("FAILED ---  'cello' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+	}
+	ps = (PackedScene*)(cv.v.ptr);
+	dbg = iCluige.iPackedScene.debug_recrusive(ps, NULL);
+//	printf("test_pksc_instanciate_with_instance : \n%s\n\n", dbg);
+	wanted_dbg =
+"name = cello\n\
+type = Label\n\
+parent =\n\
+offset_bottom = 26.0\n\
+offset_left = 3.0\n\
+offset_right = 59.0\n\
+offset_top = 3.0\n\
+text = \"coucou\"\n\
+ - children : 1\n\
+\n\
+name = instanced_note_Node2D\n\
+instance resource = assets/note.tscn\n\
+parent = .\n\
+position = Vector2(108, 84)\n\
+ - children : 0\n\n\
+";
+	if(!str_equals(dbg, wanted_dbg))
+	{
+		printf("FAILED --- 'cello' packed scene is different from expected  | test_pksc_instanciate_with_instance\n");
+	}
+	iCluige.iTscnParser.pre_delete_TscnParser(&parser_cello);
+
+	//over-scene
+	TscnParser parser_orchestr;
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_orchestr, "assets/orchestre.tscn");
+	ok = parser_orchestr.parse_scene(&parser_orchestr);
+	utils_breakpoint_trick(&ok, false);
+
+	path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
+	cv = iCluige.iSortedDictionary.get(
+			path_to_ps, "assets/orchestre.tscn");
+	if(!(cv.valid) || cv.v.ptr != parser_orchestr.scene_root)
+	{
+		printf("FAILED ---  'orchestre' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+	}
+	ps = (PackedScene*)(cv.v.ptr);
+	dbg = iCluige.iPackedScene.debug_recrusive(ps, NULL);
+//	printf("test_pksc_instanciate_with_instance : \n%s\n\n", dbg);
+	wanted_dbg =
+"name = orchestre\n\
+type = Node2D\n\
+parent =\n\
+ - children : 2\n\
+\n\
+name = left_cello\n\
+instance resource = assets/cello.tscn\n\
+parent = .\n\
+offset_bottom = 80.0\n\
+offset_left = 33.0\n\
+offset_right = 89.0\n\
+offset_top = 57.0\n\
+ - children : 0\n\
+\n\
+name = right_cello\n\
+instance resource = assets/cello.tscn\n\
+parent = .\n\
+offset_bottom = 52.0\n\
+offset_left = 283.0\n\
+offset_right = 339.0\n\
+offset_top = 29.0\n\
+ - children : 1\n\
+\n\
+name = right_partition\n\
+type = Label\n\
+parent = right_cello\n\
+layout_mode = 0\n\
+offset_bottom = 165.0\n\
+offset_left = 124.0\n\
+offset_right = 188.0\n\
+offset_top = 142.0\n\
+text = \"do re mi\"\n\
+ - children : 0\n\
+\n";
+	if(!str_equals(dbg, wanted_dbg))
+	{
+		printf("FAILED --- 'orchestre' packed scene is different from expected  | test_pksc_instanciate_with_instance\n");
+	}
+	free(dbg);
+	iCluige.iTscnParser.pre_delete_TscnParser(&parser_orchestr);
+
+	//instanciate
+	Node* my_game_root_node = iCluige.iPackedScene.instanciate(ps);
+	iCluige.iNode.add_child(iCluige.public_root_2D, my_game_root_node);
+	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
+//
+//if(ZZZZZZZZZZZZZZZ)
+//{
+//	char* pp = iCluige.iNode.get_path_mallocing(diff);
+//	printf("FAILED --- instanced Node %s different from PackedScene  | test_pksc_instanciate\n ", pp);
+//	free(pp);
+//}
+//
+
+//	iCluige.iPackedScene.pre_delete_PackedScene(ps);
+}
 
 void tscn_parser_all_tests()
 {
@@ -766,6 +920,7 @@ void tscn_parser_all_tests()
 	test_SpriteSVG_instanciate();
 	test_Camera2D_instanciate();
 	test_pksc_instanciate();
+	test_pksc_instanciate_with_instance();
 
 	//clear all public_root_2D children for a fresh start
 	int count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
