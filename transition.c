@@ -7,6 +7,7 @@
 //graphical tests
 #include "tree_test.h"
 #include "camera_test.h"
+#include "tmp_test.h"
 
 
 struct _TransitionScript
@@ -53,7 +54,7 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
  Next phase : N");
 			iCluige.iNode2D.show(this_Transition->help_Node2D);
 		}
-		if(this_Transition->next == 2)
+		else if(this_Transition->next == 2)
 		{
 			this_Transition->next++;
 			//iCluige.iNode.queue_free(this_Transition->helpSprite);
@@ -67,12 +68,30 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 			end_camera_test();
 			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
 "\
+ ~ Last minute tmp test ~\n\
+ \n\
+Next phase : N");
+			iCluige.iNode2D.show(this_Transition->help_Node2D);
+		}
+		else if(this_Transition->next == 4)
+		{
+			this_Transition->next++;
+			iCluige.iNode2D.hide(this_Transition->help_Node2D);
+			inputs_tmp();
+			launch_tmp();
+		}
+		else if(this_Transition->next == 5)
+		{
+			this_Transition->next++;
+			end_tmp_test();
+			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
+"\
  ~ End of last test ~\n\
  \n\
  Exit : N");
 			iCluige.iNode2D.show(this_Transition->help_Node2D);
 		}
-		else if(this_Transition->next == 4)
+		else if(this_Transition->next == 6)
 		{
 			iCluige.iNode.queue_free(this_Script->node);
 			iCluige.quit_asked = true;

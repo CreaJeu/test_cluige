@@ -12,12 +12,6 @@
 #include "node_test.h"
 #include "tscn_parser_test.h"
 
-// WRITE use "Debug graphical" build target if you want to test graphical things like camera
-// WRITE use "Debug printf" build target if you want to test non graphical things like node names
-// WRITE but don't forget to recompile (not auto in code::blocks)
-
-//#define IN_PRINTF_TEST  // use build targets instead, don't forget to recompile
-//#define IN_GRAPHICAL_TEST  // use build targets instead, don't forget to recompile
 
 int main()
 {

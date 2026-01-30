@@ -235,7 +235,9 @@ static void test_SpriteText_instanciate()
 
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "aaaaaaaaaa", "fake to test");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "text", "\"un es\"sai\n de te\"xte\n\nmultiligne\"");
-	iCluige.iSortedDictionary.insert(&placeholder_dico, "offset", "Vector2(-49.3, 42)");
+	//iCluige.iSortedDictionary.insert(&placeholder_dico, "offset", "Vector2(-49.3, 42)");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "offset_left", "-49.3");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "offset_top", "42");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "visible", "false");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "position", "Vector2(2.265, -3.2)");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"a sprite text\"");
@@ -615,14 +617,32 @@ static const Node* test_node_against_packed_scene(const Node* n, const PackedSce
 	if(strncmp(n->_class_name, "NodeNode2DSpriteText", strlen("NodeNode2DSpriteText")) == 0)
 	{
 		const SpriteText* n_SprtTxt = (const SpriteText*)(n_2D->_sub_class);
-		Vector2 ps_offset;
-		found = utils_vector2_from_parsed(&ps_offset, &(ps->dico_node), "offset");
+//		Vector2 ps_offset;
+//		found = utils_vector2_from_parsed(&ps_offset, &(ps->dico_node), "offset");
+//		if(found)
+//		{
+//			if(iCluige.iVector2.distance_squared_to(
+//					&ps_offset,
+//					&(n_SprtTxt->_new_baked.offset)
+//				) > iCluige.EPSILON)
+//			{
+//				return n;
+//			}
+//		}
+		float x;
+		found = utils_float_from_parsed(&x, &(ps->dico_node), "offset_left");
 		if(found)
 		{
-			if(iCluige.iVector2.distance_squared_to(
-					&ps_offset,
-					&(n_SprtTxt->_new_baked.offset)
-				) > iCluige.EPSILON)
+			if(!is_equal_approx(x, n_SprtTxt->_new_baked.offset.x))
+			{
+				return n;
+			}
+		}
+		float y;
+		found = utils_float_from_parsed(&y, &(ps->dico_node), "offset_top");
+		if(found)
+		{
+			if(!is_equal_approx(y, n_SprtTxt->_new_baked.offset.y))
 			{
 				return n;
 			}
