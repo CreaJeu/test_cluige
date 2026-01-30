@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://biu6fidv5cp1l"]
+
+[ext_resource type="PackedScene" uid="uid://dpfxpnpur5mno" path="res://assets/tmp_test/sub.tscn" id="1_np3dg"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7b3f8"]
+font_size = 6
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 18.215
+offset_top = 5.075
+offset_right = 74.215
+offset_bottom = 54.075
+text = "un truc
+direct"
+label_settings = SubResource("LabelSettings_7b3f8")
+
+[node name="SubLoinDansSubDirs" parent="." instance=ExtResource("1_np3dg")]
+position = Vector2(47, 15)

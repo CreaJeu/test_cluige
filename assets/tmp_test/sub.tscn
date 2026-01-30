@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpfxpnpur5mno"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qoipk"]
+font_size = 6
+
+[node name="SubLoinDansSubDirs" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "un truc
+instanced"
+label_settings = SubResource("LabelSettings_qoipk")

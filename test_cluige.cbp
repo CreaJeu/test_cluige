@@ -57,6 +57,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="node_test.h" />
+		<Unit filename="tmp_test.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tmp_test.h" />
 		<Unit filename="transition.c">
 			<Option compilerVar="CC" />
 		</Unit>
