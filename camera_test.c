@@ -4,12 +4,24 @@
 #include "common_test.h"
 #include "camera_test.h"
 
+//re-declared because extern in .h (like static in c++)
+int UP;
+int DOWN;
+int LEFT;
+int RIGHT;
+int ZOOM;// T
+int ROT_90;// J K L
+int ROT_45;
+int ROT_180;
+//int NEXT;
+//int JUMP;
 
 
 SpriteSVG* godot_svg;
 Node2D* playerNode2D;
 
-char  area[MAX_SIZE];
+const int MAX_AREA_NB_CHARS = 1000000;
+
 
 
 struct _PlayerScript
@@ -191,12 +203,12 @@ void inputs_camera()
 }
 
 
-static void create_area(int size)
+static void create_area(int size, char* area)
 {
-	 if (size < 1 || (size * (size + 1)) >= MAX_SIZE)
+	 if (size < 1 || (size * (size + 1)) >= MAX_AREA_NB_CHARS)
 	{
 		// Handle invalid size or size exceeding the buffer limit
-		snprintf(area, MAX_SIZE, "Error: Invalid size or size exceeds buffer limit.\n");
+		snprintf(area, MAX_AREA_NB_CHARS, "Error: Invalid size or size exceeds buffer limit.\n");
 		return;
 	}
 
@@ -234,12 +246,12 @@ void launch_camera()
 
 
 	//Box (area)
-
-	create_area(30);
+	char area[MAX_AREA_NB_CHARS];
+	create_area(30, area);
 	SpriteText* areaSpriteText = iCluige.iSpriteText.new_SpriteText();
 	Node* areaNode = areaSpriteText->_this_Node2D->_this_Node;
 	iCluige.iNode.set_name(areaNode, "Area");
-	iCluige.iSpriteText.set_text(areaSpriteText,area);
+	iCluige.iSpriteText.set_text(areaSpriteText, area);
 	iCluige.iNode2D.move_local(areaSpriteText->_this_Node2D, (Vector2){16, 16});
 	iCluige.iNode.add_child(gameRootRootNode, areaNode);
 

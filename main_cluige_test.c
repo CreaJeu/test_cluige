@@ -5,7 +5,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "common_test.h"
+//#include "common_test.h"
 #include "transition.h"
 
 //printf tests

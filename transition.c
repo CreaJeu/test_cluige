@@ -9,6 +9,11 @@
 #include "camera_test.h"
 #include "tmp_test.h"
 
+//re-declared because extern in .h (like static in c++)
+//int UP;
+//...
+int NEXT;
+//int JUMP;
 
 struct _TransitionScript
 {

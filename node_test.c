@@ -1,7 +1,7 @@
 //#include <stdlib.h> //already in cluige.h
 //#include <stddef.h> //already in cluige.h
 #include <cluige.h>
-#include "common_test.h"
+//#include "common_test.h"
 #include "node_test.h"
 
 

@@ -4,6 +4,11 @@
 #include "common_test.h"
 #include "tree_test.h"
 
+//re-declared because extern in .h (like static in c++)
+//int UP;
+//...
+int JUMP;
+
 int nb_cumul_enter_tree = 0;
 int nb_cumul_ready = 0;
 int nb_cumul_exit_tree = 0;

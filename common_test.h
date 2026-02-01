@@ -1,25 +1,25 @@
-#ifndef COMMON_TEST_H_INCLUDED
-#define COMMON_TEST_H_INCLUDED
+#ifndef CLUIGE_COMMON_TEST_H_INCLUDED
+#define CLUIGE_COMMON_TEST_H_INCLUDED
 
 //#include "cluige.h"
 
-#define MAX_SIZE 1000000
-#define PI 3.1415926535897932
+//#define MAX_SIZE 1000000
+//#define PI 3.1415926535897932
 
 //input actions
-int UP;// Z Q S D
-int DOWN;
-int LEFT;
-int RIGHT;
-int ZOOM;// T
-int ROT_90;// J K L
-int ROT_45;
-int ROT_180;
-//int ROT_270;
-int NEXT;
-int JUMP;
-//int EXIT_ACTION; // x
+extern int UP;// Z Q S D
+extern int DOWN;
+extern int LEFT;
+extern int RIGHT;
+extern int ZOOM;// T
+extern int ROT_90;// J K L
+extern int ROT_45;
+extern int ROT_180;
+//extern int ROT_270;
+extern int NEXT;
+extern int JUMP;
+//extern int EXIT_ACTION; // x
 
 
 
-#endif // COMMON_TEST_H_INCLUDED
+#endif // CLUIGE_COMMON_TEST_H_INCLUDED

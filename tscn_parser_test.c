@@ -3,7 +3,7 @@
 #include <cluige.h>
 #include <assert.h>
 #include <math.h>
-#include "common_test.h"
+//#include "common_test.h"
 #include "tscn_parser_test.h"
 
 
