@@ -51,7 +51,8 @@ static void process_Monitor(Script* this_Script, float elapsed_seconds);
 
 struct _MonsterScript* new_Monster(Node* this_Node)
 {
-	Script* new_Script = iCluige.iScript.new_Script(this_Node);
+	Script* new_Script = iCluige.iScript.new_Script();
+	iCluige.iScript.attach(new_Script, this_Node);
 	struct _MonsterScript* new_monster = iCluige.checked_malloc(sizeof(struct _MonsterScript));
 
 	new_monster->this_Script = new_Script;
@@ -65,13 +66,13 @@ struct _MonsterScript* new_Monster(Node* this_Node)
 	new_Script->ready = ready_Monster;
 	new_Script->exit_tree = exit_tree_Monster;
 	new_Script->_sub_class = new_monster;
-	this_Node->script = new_Script;
 	return new_monster;
 }
 
 struct _GenealogyMonsterScript* new_GenealogyMonster(Node* this_Node)
 {
-	Script* new_Script = iCluige.iScript.new_Script(this_Node);
+	Script* new_Script = iCluige.iScript.new_Script();
+	iCluige.iScript.attach(new_Script, this_Node);
 	struct _GenealogyMonsterScript* new_monster = iCluige.checked_malloc(sizeof(struct _GenealogyMonsterScript));
 
 	new_monster->this_Script = new_Script;
@@ -81,20 +82,19 @@ struct _GenealogyMonsterScript* new_GenealogyMonster(Node* this_Node)
 	new_Script->enter_tree = enter_tree_GenealogyMonster;
 	new_Script->ready = ready_GenealogyMonster;
 	new_Script->_sub_class = new_monster;
-	this_Node->script = new_Script;
 	return new_monster;
 }
 
 struct _MonitorScript* new_Monitor(Node* this_Node)
 {
-	Script* new_Script = iCluige.iScript.new_Script(this_Node);
+	Script* new_Script = iCluige.iScript.new_Script();
+	iCluige.iScript.attach(new_Script, this_Node);
 	struct _MonitorScript* new_monitor = iCluige.checked_malloc(sizeof(struct _MonitorScript));
 
 	new_monitor->this_Script = new_Script;
 
 	new_Script->process = process_Monitor;
 	new_Script->_sub_class = new_monitor;
-	this_Node->script = new_Script;
 	return new_monitor;
 }
 

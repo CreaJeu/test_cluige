@@ -61,16 +61,15 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 
 TransitionScript* newTransition(Node* this_Node)
 {
-	Script* new_Script = iCluige.iScript.new_Script(this_Node);
+	Script* new_Script = iCluige.iScript.new_Script();
+	iCluige.iScript.attach(new_Script, this_Node);
 	TransitionScript* newTransition = iCluige.checked_malloc(sizeof(TransitionScript));
 
 	newTransition->this_Script = new_Script;
 	newTransition->next = 0;
 
-	new_Script->node = this_Node;
 	new_Script->process = process_Transition;
 	new_Script->_sub_class = newTransition;
-	this_Node->script = new_Script;
 
 	SpriteText* help_SpriteText = iCluige.iSpriteText.new_SpriteText();
 	Node2D* help_Node2D = help_SpriteText->_this_Node2D;
