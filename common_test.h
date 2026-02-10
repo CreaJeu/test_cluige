@@ -21,5 +21,16 @@ extern int JUMP;
 //extern int EXIT_ACTION; // x
 
 
+struct _TestStep
+{
+	bool* started;
+	void (*inputs)();
+	void (*launch)();
+	void (*finish)();
+	char* help_text;
+};
+typedef struct _TestStep TestStep;
+
+
 
 #endif // CLUIGE_COMMON_TEST_H_INCLUDED

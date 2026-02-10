@@ -12,6 +12,7 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-DCLUIGE_DEBUG" />
 				</Compiler>
@@ -57,10 +58,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="node_test.h" />
-		<Unit filename="tmp_test.c">
+		<Unit filename="recursive_tscn_test.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="tmp_test.h" />
+		<Unit filename="recursive_tscn_test.h" />
 		<Unit filename="transition.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -16,6 +16,7 @@ int ROT_180;
 //int NEXT;
 //int JUMP;
 
+bool camera_test_started = false;
 
 SpriteSVG* godot_svg;
 Node2D* playerNode2D;
@@ -235,6 +236,7 @@ static void create_area(int size, char* area)
 void launch_camera()
 {
 //	iCluige.wanted_frame_seconds = 1.666;
+	camera_test_started = true;
 
 	//gameroot node
 	Node2D* gameRootNode2D = iCluige.iNode2D.new_Node2D();
@@ -346,4 +348,26 @@ void end_camera_test()
 	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
 	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game");
 	iCluige.iNode.queue_free(game_root);
+}
+
+TestStep make_camera_test_step()
+{
+	TestStep res;
+	res.started = &camera_test_started;
+	res.inputs = inputs_camera;
+	res.launch = launch_camera;
+	res.finish = end_camera_test;
+	res.help_text =
+"\
+ Test 2 : Camera\
+ \n\n\
+ ~ instructions ~\n\
+ Move Camera : ZQSD\n\
+ Zoom : T\n\
+ ROT_45 : L\n\
+ ROT_90 : J\n\
+ ROT_180 : K\n\
+ \n\
+ Next phase : N";
+	return res;
 }

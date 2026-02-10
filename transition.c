@@ -6,14 +6,16 @@
 
 //graphical tests
 #include "tree_test.h"
+#include "recursive_tscn_test.h"
 #include "camera_test.h"
-#include "tmp_test.h"
 
 //re-declared because extern in .h (like static in c++)
 //int UP;
 //...
 int NEXT;
 //int JUMP;
+
+TestStep* allSteps;
 
 struct _TransitionScript
 {
@@ -34,78 +36,27 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 
 	if(iii->is_action_just_pressed(NEXT))
 	{
-		if(this_Transition->next == 0)
-		{
-			this_Transition->next++;
-			iCluige.iNode2D.hide(this_Transition->help_Node2D);
-			inputs_tree_test();
-			launch_tree_test();
-		}
-		else if(this_Transition->next == 1)
-		{
-			this_Transition->next++;
-			end_tree_test();
-			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
-"\
- Test 2 : Camera\
- \n\n\
- ~ instructions ~\n\
- Move Camera : ZQSD\n\
- Zoom : T\n\
- ROT_45 : L\n\
- ROT_90 : J\n\
- ROT_180 : K\n\
- \n\
- Next phase : N");
-			iCluige.iNode2D.show(this_Transition->help_Node2D);
-		}
-		else if(this_Transition->next == 2)
-		{
-			this_Transition->next++;
-			//iCluige.iNode.queue_free(this_Transition->helpSprite);
-			iCluige.iNode2D.hide(this_Transition->help_Node2D);
-			inputs_camera();
-			launch_camera();
-		}
-		else if(this_Transition->next == 3)
-		{
-			this_Transition->next++;
-			end_camera_test();
-			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
-"\
- ~ Last minute tmp test ~\n\
- \n\
-Next phase : N");
-			iCluige.iNode2D.show(this_Transition->help_Node2D);
-		}
-		else if(this_Transition->next == 4)
-		{
-			this_Transition->next++;
-			iCluige.iNode2D.hide(this_Transition->help_Node2D);
-			inputs_tmp();
-			launch_tmp();
-		}
-		else if(this_Transition->next == 5)
-		{
-			this_Transition->next++;
-			end_tmp_test();
-			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
-"\
- ~ End of last test ~\n\
- \n\
- Exit : N");
-			iCluige.iNode2D.show(this_Transition->help_Node2D);
-		}
-		else if(this_Transition->next == 6)
+
+		if(allSteps[this_Transition->next].started == NULL)
 		{
 			iCluige.iNode.queue_free(this_Script->node);
 			iCluige.quit_asked = true;
 		}
+		else if(!*(allSteps[this_Transition->next].started))
+		{
+			iCluige.iNode2D.hide(this_Transition->help_Node2D);
+			allSteps[this_Transition->next].inputs();
+			allSteps[this_Transition->next].launch();
+		}
+		else
+		{
+			allSteps[this_Transition->next].finish();
+			this_Transition->next++;
+			iCluige.iSpriteText.set_text(this_Transition->help_SpriteText,
+					allSteps[this_Transition->next].help_text);
+			iCluige.iNode2D.show(this_Transition->help_Node2D);
+		}
 	}
-//	if(iii->is_action_just_pressed(EXIT_ACTION))
-//	{
-//		iCluige.quit_asked = true;
-//	}
 }
 
 TransitionScript* newTransition(Node* this_Node)
@@ -127,14 +78,7 @@ TransitionScript* newTransition(Node* this_Node)
 	newTransition->help_Node2D = help_Node2D;
 	newTransition->help_SpriteText = help_SpriteText;
 	iCluige.iSpriteText.set_text(help_SpriteText,
-"\
- Test 1 : Tree\
- \n\n\
- ~ instructions ~\n\
- \n\
- start test : N");
-//	Camera2D* cam = iCluige.iCamera2D.current_camera;
-//	Node2D* camNde2D = cam->_this_Node2D;
+			allSteps[0].help_text);
 	iCluige.iNode.add_child(this_Node, help_Node);
 	iCluige.iNode2D.set_local_position(help_Node2D, (Vector2){ 6, 4 });
 	return newTransition;
@@ -142,6 +86,19 @@ TransitionScript* newTransition(Node* this_Node)
 
 void init_transition()
 {
+	const int NB_TESTS = 3;
+	allSteps = iCluige.checked_malloc((NB_TESTS + 1) * sizeof(TestStep));
+	//never freed, because app-long life
+	int c = 0;
+	allSteps[c++] = make_tree_test_step();
+	allSteps[c++] = make_camera_test_step();
+	allSteps[c++] = make_recursive_tscn_test_step();
+	allSteps[c++] = (TestStep){ NULL, NULL, NULL, NULL,
+"\
+ ~ End of last test ~\n\
+ \n\
+ Exit : N"
+	};
 	//gameroot node
 	Node* transitionNode = iCluige.iNode.new_Node();
 	iCluige.iNode.set_name(transitionNode, "Transition");

@@ -9,6 +9,8 @@
 //...
 int JUMP;
 
+bool tree_test_started = false;
+
 int nb_cumul_enter_tree = 0;
 int nb_cumul_ready = 0;
 int nb_cumul_exit_tree = 0;
@@ -325,6 +327,7 @@ Node* generate_SpriteText(const char* node_name, Node* parent, const char* text,
 void launch_tree_test()
 {
 //	iCluige.wanted_frame_seconds = 1.666;
+	tree_test_started = true;
 
 	//gameroot node
 	Node2D* gameRootNode2D = iCluige.iNode2D.new_Node2D();
@@ -366,4 +369,21 @@ void end_tree_test()
 	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
 	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game_tree_test");
 	iCluige.iNode.queue_free(game_root);
+}
+
+TestStep make_tree_test_step()
+{
+	TestStep res;
+	res.started = &tree_test_started;
+	res.inputs = inputs_tree_test;
+	res.launch = launch_tree_test;
+	res.finish = end_tree_test;
+	res.help_text =
+"\
+ Test 1 : Tree\
+ \n\n\
+ ~ instructions ~\n\
+ \n\
+ start test : N";
+	return res;
 }
