@@ -95,7 +95,7 @@ TestStep make_recursive_tscn_test_step()
 	res.finish = end_recursive_tscn_test;
 	res.help_text =
 "\
- ~ Tscn that instanciates another tscn test ~\n\
+ ~ Tscn that instanciates another tscn ~\n\
  \n\
 Next phase : N";
 	return res;

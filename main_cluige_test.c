@@ -40,11 +40,11 @@ int main()
 	cluige_run();
 
 	int finish = cluige_finish();
-//#ifdef IN_PRINTF_TEST
+
 //	utils_breakpoint_trick(NULL, true);
-	printf("\nThe End ! Press ENTER key to quit...\n");
-	getchar();
-//#endif // IN_PRINTF_TEST
+	//printf("\nThe End ! Press ENTER key to quit...\n");
+	//getchar();
+
 	return finish;
 }
 
