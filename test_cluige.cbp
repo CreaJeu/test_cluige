@@ -49,8 +49,13 @@
 					<Add option="-DCLUIGE_DEBUG" />
 				</Compiler>
 				<Linker>
-					<Add library="../cluige_microCommits/bin/Debug/libcluige.so" />
-					<Add library="../PDCurses/x11/libXCurses.so" />
+					<Add option="-static-libgcc" />
+					<Add option="-Wl,-rpath,&apos;\\$$$$ORIGIN&apos;" />
+					<Add library="XCurses" />
+					<Add library="cluige" />
+					<Add directory="../PDCurses/x11" />
+					<Add directory="../cluige/bin/Debug" />
+					<Add directory="." />
 				</Linker>
 			</Target>
 			<Target title="ReleaseLinux">
@@ -65,8 +70,11 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="../cluige_microCommits/bin/Release/libcluige.so" />
-					<Add library="../PDCurses/x11/libXCurses.so" />
+					<Add option="-Wl,-rpath,&apos;\\$$$$ORIGIN&apos;" />
+					<Add library="XCurses" />
+					<Add library="cluige" />
+					<Add directory="../PDCurses/x11" />
+					<Add directory="../cluige/bin/Debug" />
 				</Linker>
 			</Target>
 		</Build>
