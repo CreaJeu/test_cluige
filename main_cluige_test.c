@@ -37,6 +37,10 @@ int main()
 	//input : 'n' to Next phase
 	init_transition();
 
+	iCluige.window_title = "test cluige";
+	iCluige.window_initial_size_cols = 133;
+	iCluige.window_initial_size_lines = 57;
+
 	cluige_run();
 
 	int finish = cluige_finish();
