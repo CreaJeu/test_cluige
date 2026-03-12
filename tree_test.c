@@ -52,7 +52,7 @@ static void process_Monitor(Script* this_Script, float elapsed_seconds);
 struct _MonsterScript* new_Monster(Node* this_Node)
 {
 	Script* new_Script = iCluige.iScript.new_Script();
-	iCluige.iScript.attach(new_Script, this_Node);
+	iCluige.iNode.set_script(this_Node, new_Script);
 	struct _MonsterScript* new_monster = iCluige.checked_malloc(sizeof(struct _MonsterScript));
 
 	new_monster->this_Script = new_Script;
@@ -72,7 +72,7 @@ struct _MonsterScript* new_Monster(Node* this_Node)
 struct _GenealogyMonsterScript* new_GenealogyMonster(Node* this_Node)
 {
 	Script* new_Script = iCluige.iScript.new_Script();
-	iCluige.iScript.attach(new_Script, this_Node);
+	iCluige.iNode.set_script(this_Node, new_Script);
 	struct _GenealogyMonsterScript* new_monster = iCluige.checked_malloc(sizeof(struct _GenealogyMonsterScript));
 
 	new_monster->this_Script = new_Script;
@@ -88,7 +88,7 @@ struct _GenealogyMonsterScript* new_GenealogyMonster(Node* this_Node)
 struct _MonitorScript* new_Monitor(Node* this_Node)
 {
 	Script* new_Script = iCluige.iScript.new_Script();
-	iCluige.iScript.attach(new_Script, this_Node);
+	iCluige.iNode.set_script(this_Node, new_Script);
 	struct _MonitorScript* new_monitor = iCluige.checked_malloc(sizeof(struct _MonitorScript));
 
 	new_monitor->this_Script = new_Script;
@@ -262,7 +262,7 @@ static void process_Monitor(Script* this_Script, float elapsed_seconds)
 			{
 				iCluige.iSpriteText.set_text(this_SpriteText,
 "\
-instructions                       monsters instanciated correctly, continue to add_child them\n\
+instructions                       monsters instantiated correctly, continue to add_child them\n\
    next sub-test : SPACE\n\
    next big test : N "
 				);

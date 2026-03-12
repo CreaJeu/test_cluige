@@ -57,7 +57,7 @@ void launch_recursive_tscn_test()
 			path_to_ps, "assets/tmp_test/sub.tscn");
 	if(!(cv.valid) || cv.v.ptr != parser_sub.scene_root)
 	{
-		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate_with_instance\n ");
 	}
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_sub);
 
@@ -70,12 +70,12 @@ void launch_recursive_tscn_test()
 			path_to_ps, "assets/tmp_test/up.tscn");
 	if(!(cv.valid) || cv.v.ptr != parser_up.scene_root)
 	{
-		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate_with_instance\n ");
 	}
 	PackedScene* ps = (PackedScene*)(cv.v.ptr);
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_up);
 
-	tmp_test_Node = iCluige.iPackedScene.instanciate(ps);
+	tmp_test_Node = iCluige.iPackedScene.instantiate(ps);
 	iCluige.iNode.add_child(iCluige.public_root_2D, tmp_test_Node);
 
 //	newPlayer(playerNode);// attach script to The player node
@@ -95,7 +95,7 @@ TestStep make_recursive_tscn_test_step()
 	res.finish = end_recursive_tscn_test;
 	res.help_text =
 "\
- ~ Tscn that instanciates another tscn ~\n\
+ ~ Tscn that instantiates another tscn ~\n\
  \n\
 Next phase : N";
 	return res;

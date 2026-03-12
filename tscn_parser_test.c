@@ -119,18 +119,18 @@ static void test_utils_str_from_parsed()
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 }
 
-static void test_Node_instanciate()
+static void test_Node_instantiate()
 {
 	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Node");
 	if(!(cv_fcty.valid))
 	{
-		printf("FAILED --- should be valid  | test_Node_instanciate 0\n ");
+		printf("FAILED --- should be valid  | test_Node_instantiate 0\n ");
 	}
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
-	if((fcty->instanciate) == NULL)
+	if((fcty->instantiate) == NULL)
 	{
-		printf("FAILED --- should be a function  | test_Node_instanciate 1\n ");
+		printf("FAILED --- should be a function  | test_Node_instantiate 1\n ");
 	}
 	SortedDictionary placeholder_dico;
 	iCluige.iSortedDictionary.sorted_dictionary_alloc(&placeholder_dico, VT_POINTER, VT_POINTER, 3);
@@ -138,48 +138,48 @@ static void test_Node_instanciate()
 
 //	Node* res = iCluige.iNode.new_Node();
 //	iCluige.iNode.deserialize_dico(res, &placeholder_dico);
-//	Node* res = fcty->instanciate(&placeholder_dico); ::must assert(missing name)
+//	Node* res = fcty->instantiate(&placeholder_dico); ::must assert(missing name)
 
 	//Node* res2 = iCluige.iNode.new_Node();
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"azertyuiop\"");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "process_priority", "-42");
 	//iCluige.iNode.deserialize_dico(res2, &placeholder_dico);
-	Node* res2 = fcty->instanciate(&placeholder_dico);
+	Node* res2 = fcty->instantiate(&placeholder_dico);
 	if(res2 == NULL || 0 != strcmp(res2->name, "azertyuiop"))
 	{
-		printf("FAILED --- should be \"azertyuiop\"  | test_Node_instanciate 2\n ");
+		printf("FAILED --- should be \"azertyuiop\"  | test_Node_instantiate 2\n ");
 	}
 	if(res2 == NULL || res2->process_priority != -42)
 	{
-		printf("FAILED --- should be -42  | test_Node_instanciate 3\n ");
+		printf("FAILED --- should be -42  | test_Node_instantiate 3\n ");
 	}
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 //	res->delete_Node(res);//calls free(res);
 	res2->delete_Node(res2);//calls free(res2);
 }
 
-static void test_Node2D_instanciate()
+static void test_Node2D_instantiate()
 {
 	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Node2D");
 	if(!(cv_fcty.valid))
 	{
-		printf("FAILED --- should be valid  | test_Node2D_instanciate 0\n ");
+		printf("FAILED --- should be valid  | test_Node2D_instantiate 0\n ");
 	}
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
-	if((fcty->instanciate) == NULL)
+	if((fcty->instantiate) == NULL)
 	{
-		printf("FAILED --- should be a function  | test_Node2D_instanciate 1\n ");
+		printf("FAILED --- should be a function  | test_Node2D_instantiate 1\n ");
 	}
 
 	SortedDictionary placeholder_dico;
 	iCluige.iSortedDictionary.sorted_dictionary_alloc(&placeholder_dico, VT_POINTER, VT_POINTER, 3);
 	iCluige.iSortedDictionary.set_compare_keys_func(&placeholder_dico, iCluige.iDeque.default_compare_string_func);
-	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"test_Node2D_instanciate\"");
+	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"test_Node2D_instantiate\"");
 
 //	Node2D* res = iCluige.iNode2D.new_Node2D();
 //	iCluige.iNode2D.deserialize_dico(res, &placeholder_dico);
-	Node2D* res = (Node2D*)(fcty->instanciate(&placeholder_dico)->_sub_class);
+	Node2D* res = (Node2D*)(fcty->instantiate(&placeholder_dico)->_sub_class);
 	res->_this_Node->delete_Node(res->_this_Node);//calls free(res) and recursiv
 
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "visible", "false");
@@ -187,7 +187,7 @@ static void test_Node2D_instanciate()
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"a 1 23 4567890bcdefghijklmnopqrst\"");
 //	Node2D* res2 = iCluige.iNode2D.new_Node2D();
 //	iCluige.iNode2D.deserialize_dico(res2, &placeholder_dico);
-	Node2D* res2 = (Node2D*)(fcty->instanciate(&placeholder_dico)->_sub_class);
+	Node2D* res2 = (Node2D*)(fcty->instantiate(&placeholder_dico)->_sub_class);
 	if(0 != strcmp(res2->_this_Node->name, "a 1 23 4567890bcdefghijklmnopqrst"))
 	{
 		printf("FAILED --- should be \"a 1 23 4567890bcdefghijklmnopqrst\"  | test_Node2D_deserialize_dico 2\n ");
@@ -210,18 +210,18 @@ static void test_Node2D_instanciate()
 	res2->_this_Node->delete_Node(res2->_this_Node);//calls free(res2) and recursiv
 }
 
-static void test_SpriteText_instanciate()
+static void test_SpriteText_instantiate()
 {
 	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Label");
 	if(!(cv_fcty.valid))
 	{
-		printf("FAILED --- SpriteText not in factories  | test_SpriteText_instanciate 0\n ");
+		printf("FAILED --- SpriteText not in factories  | test_SpriteText_instantiate 0\n ");
 	}
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
-	if((fcty->instanciate) == NULL)
+	if((fcty->instantiate) == NULL)
 	{
-		printf("FAILED --- uninitialized SpriteText factory function  | test_SpriteText_instanciate 1\n ");
+		printf("FAILED --- uninitialized SpriteText factory function  | test_SpriteText_instantiate 1\n ");
 	}
 
 	SortedDictionary placeholder_dico;
@@ -243,57 +243,57 @@ static void test_SpriteText_instanciate()
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "name", "\"a sprite text\"");
 //	SpriteText* res2 = iCluige.iSpriteText.new_SpriteText();
 	//iCluige.iSpriteText.deserialize_dico(res2, &placeholder_dico);
-	Node* res2_n = fcty->instanciate(&placeholder_dico);
+	Node* res2_n = fcty->instantiate(&placeholder_dico);
 	Node2D* res2_n2d = (Node2D*)(res2_n->_sub_class);
 	SpriteText* res2 = (SpriteText*)(res2_n2d->_sub_class);
 	if(0 != strcmp(res2->_this_Node2D->_this_Node->name, "a sprite text"))
 	{
-		printf("FAILED --- should be \"a sprite text\"  | test_SpriteText_instanciate 2\n ");
+		printf("FAILED --- should be \"a sprite text\"  | test_SpriteText_instantiate 2\n ");
 	}
 	if(res2->_this_Node2D->visible)
 	{
-		printf("FAILED --- should be false  | test_SpriteText_instanciate 3\n ");
+		printf("FAILED --- should be false  | test_SpriteText_instantiate 3\n ");
 	}
 	float gap = fabs(res2->_this_Node2D->position.x - 2.265);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be 2.265  | test_SpriteText_instanciate 4\n ");
+		printf("FAILED --- should be 2.265  | test_SpriteText_instantiate 4\n ");
 	}
 	gap = fabs(res2->_this_Node2D->position.y - -3.2);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be -3.2  | test_SpriteText_instanciate 5\n ");
+		printf("FAILED --- should be -3.2  | test_SpriteText_instantiate 5\n ");
 	}
 	gap = fabs(res2->_new_baked.offset.x - -49.3);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be -49.3  | test_SpriteText_instanciate 6\n ");
+		printf("FAILED --- should be -49.3  | test_SpriteText_instantiate 6\n ");
 	}
 	gap = fabs(res2->_new_baked.offset.y - 42);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be 42  | test_SpriteText_instanciate 7\n ");
+		printf("FAILED --- should be 42  | test_SpriteText_instantiate 7\n ");
 	}
 	if(0 != strcmp(res2->_new_baked.text, "un es\"sai\n de te\"xte\n\nmultiligne"))
 	{
-		printf("FAILED --- should be \"un es\"sai...\"  | test_SpriteText_instanciate 8\n ");
+		printf("FAILED --- should be \"un es\"sai...\"  | test_SpriteText_instantiate 8\n ");
 	}
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 	res2->_this_Node2D->_this_Node->delete_Node(res2->_this_Node2D->_this_Node);//calls free(res2) and recursiv
 }
 
-static void test_SpriteSVG_instanciate()
+static void test_SpriteSVG_instantiate()
 {
 	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Sprite2D");
 	if(!(cv_fcty.valid))
 	{
-		printf("FAILED --- SpriteSVG not in factories  | test_SpriteSVG_instanciate\n ");
+		printf("FAILED --- SpriteSVG not in factories  | test_SpriteSVG_instantiate\n ");
 	}
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
-	if((fcty->instanciate) == NULL)
+	if((fcty->instantiate) == NULL)
 	{
-		printf("FAILED --- uninitialized SpriteSVG factory function  | test_SpriteSVG_instanciate\n ");
+		printf("FAILED --- uninitialized SpriteSVG factory function  | test_SpriteSVG_instantiate\n ");
 	}
 
 	SortedDictionary placeholder_dico;
@@ -314,47 +314,47 @@ static void test_SpriteSVG_instanciate()
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "position", "Vector2(2.265, -3.2)");
 //	SpriteSVG* res2 = iCluige.iSpriteSVG.new_SpriteSVG();
 //	iCluige.iSpriteSVG.deserialize_dico(res2, &placeholder_dico);
-	Node* res2_n = fcty->instanciate(&placeholder_dico);
+	Node* res2_n = fcty->instantiate(&placeholder_dico);
 	Node2D* res2_n2d = (Node2D*)(res2_n->_sub_class);
 	SpriteSVG* res2 = (SpriteSVG*)(res2_n2d->_sub_class);
-	//SpriteSVG* res2 = (SpriteSVG*)(fcty->instanciate(&placeholder_dico)->_sub_class);
+	//SpriteSVG* res2 = (SpriteSVG*)(fcty->instantiate(&placeholder_dico)->_sub_class);
 	if(0 != strcmp(res2->_this_Node2D->_this_Node->name, "a sprite svg"))
 	{
-		printf("FAILED --- should be \"a sprite svg\"  | test_SpriteSVG_instanciate 1\n ");
+		printf("FAILED --- should be \"a sprite svg\"  | test_SpriteSVG_instantiate 1\n ");
 	}
 	if(res2->_this_Node2D->visible)
 	{
-		printf("FAILED --- should be false  | test_SpriteSVG_instanciate 2\n ");
+		printf("FAILED --- should be false  | test_SpriteSVG_instantiate 2\n ");
 	}
 	float gap = fabs(res2->_this_Node2D->position.x - 2.265);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be 2.265  | test_SpriteSVG_instanciate 3\n ");
+		printf("FAILED --- should be 2.265  | test_SpriteSVG_instantiate 3\n ");
 	}
 	gap = fabs(res2->_this_Node2D->position.y - -3.2);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be -3.2  | test_SpriteSVG_instanciate 4\n ");
+		printf("FAILED --- should be -3.2  | test_SpriteSVG_instantiate 4\n ");
 	}
 	gap = fabs(res2->offset.x - -49.3);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be -49.3  | test_SpriteSVG_instanciate 5\n ");
+		printf("FAILED --- should be -49.3  | test_SpriteSVG_instantiate 5\n ");
 	}
 	gap = fabs(res2->offset.y - 42);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be 42  | test_SpriteSVG_instanciate 6\n ");
+		printf("FAILED --- should be 42  | test_SpriteSVG_instantiate 6\n ");
 	}
 	gap = fabs(res2->scale.x - -1.45);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be -1.45  | test_SpriteSVG_instanciate 7\n ");
+		printf("FAILED --- should be -1.45  | test_SpriteSVG_instantiate 7\n ");
 	}
 	gap = fabs(res2->scale.y - .66);
 	if(gap > .0001)
 	{
-		printf("FAILED --- should be .66  | test_SpriteSVG_instanciate 8\n ");
+		printf("FAILED --- should be .66  | test_SpriteSVG_instantiate 8\n ");
 	}
 	Path2D* path = (Path2D*)(iCluige.iDeque.at(&(res2->paths), 0).ptr);
 	Vector2* point0 = (Vector2*)(iCluige.iDeque.at(&(path->_points), 0).ptr);
@@ -364,18 +364,18 @@ static void test_SpriteSVG_instanciate()
 	res2->_this_Node2D->_this_Node->delete_Node(res2->_this_Node2D->_this_Node);//calls free(res2) and recursiv
 }
 
-static void test_Camera2D_instanciate()
+static void test_Camera2D_instantiate()
 {
 	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Camera2D");
 	if(!(cv_fcty.valid))
 	{
-		printf("FAILED --- Camera2D not in factories  | test_Camera2D_instanciate\n ");
+		printf("FAILED --- Camera2D not in factories  | test_Camera2D_instantiate\n ");
 	}
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
-	if((fcty->instanciate) == NULL)
+	if((fcty->instantiate) == NULL)
 	{
-		printf("FAILED --- uninitialized Camera2D factory function  | test_Camera2D_instanciate\n ");
+		printf("FAILED --- uninitialized Camera2D factory function  | test_Camera2D_instantiate\n ");
 	}
 
 	SortedDictionary placeholder_dico;
@@ -396,54 +396,54 @@ static void test_Camera2D_instanciate()
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "limit_bottom", "10000850");
 	iCluige.iSortedDictionary.insert(&placeholder_dico, "position", "Vector2(2.265, -3.2)");
 
-	Node* res2_n = fcty->instanciate(&placeholder_dico);
+	Node* res2_n = fcty->instantiate(&placeholder_dico);
 	Node2D* res2_n2d = (Node2D*)(res2_n->_sub_class);
 	Camera2D* res2 = (Camera2D*)(res2_n2d->_sub_class);
 	if(0 != strcmp(res2->_this_Node2D->_this_Node->name, "a camera2D"))
 	{
-		printf("FAILED --- should be \"a camera2D\"  | test_Camera2D_instanciate 1\n ");
+		printf("FAILED --- should be \"a camera2D\"  | test_Camera2D_instantiate 1\n ");
 	}
 	Vector2 v = (Vector2){1.105, -3.255};
 	if(!iCluige.iVector2.is_equal_approx(&(res2->offset), &v))
 	{
-		printf("FAILED --- should be (1.105, -3.255)  | test_Camera2D_instanciate 2\n ");
+		printf("FAILED --- should be (1.105, -3.255)  | test_Camera2D_instantiate 2\n ");
 	}
 //	if(res2->enabled)
 //	{
-//		printf("FAILED --- should be false  | test_Camera2D_instanciate 3\n ");
+//		printf("FAILED --- should be false  | test_Camera2D_instantiate 3\n ");
 //	}
 	if(res2->ignore_rotation)
 	{
-		printf("FAILED --- should be false  | test_Camera2D_instanciate 4\n ");
+		printf("FAILED --- should be false  | test_Camera2D_instantiate 4\n ");
 	}
 	if(!is_equal_approx(res2->rotation_radians, 1.58825))
 	{
-		printf("FAILED --- should be 1.58825  | test_Camera2D_instanciate 5\n ");
+		printf("FAILED --- should be 1.58825  | test_Camera2D_instantiate 5\n ");
 	}
 	v = (Vector2){2.325, -3.52};
 	if(!iCluige.iVector2.is_equal_approx(&(res2->zoom), &v))
 	{
-		printf("FAILED --- should be (2.325, -3.52)  | test_Camera2D_instanciate 6\n ");
+		printf("FAILED --- should be (2.325, -3.52)  | test_Camera2D_instantiate 6\n ");
 	}
 	if(!is_equal_approx(res2->limit_top, -9998460))
 	{
-		printf("FAILED --- should be -9998460  | test_Camera2D_instanciate 7\n ");
+		printf("FAILED --- should be -9998460  | test_Camera2D_instantiate 7\n ");
 	}
 	if(!is_equal_approx(res2->limit_right, 9999395))
 	{
-		printf("FAILED --- should be 9999395  | test_Camera2D_instanciate 8\n ");
+		printf("FAILED --- should be 9999395  | test_Camera2D_instantiate 8\n ");
 	}
 	if(!is_equal_approx(res2->limit_left, -10002950))
 	{
-		printf("FAILED --- should be -10002950  | test_Camera2D_instanciate 9\n ");
+		printf("FAILED --- should be -10002950  | test_Camera2D_instantiate 9\n ");
 	}
 	if(!is_equal_approx(res2->limit_bottom, 10000850))
 	{
-		printf("FAILED --- should be 10000850  | test_Camera2D_instanciate 10\n ");
+		printf("FAILED --- should be 10000850  | test_Camera2D_instantiate 10\n ");
 	}
 	if(res2->anchor_mode != 0)
 	{
-		printf("FAILED --- should be 0  | test_Camera2D_instanciate 11\n ");
+		printf("FAILED --- should be 0  | test_Camera2D_instantiate 11\n ");
 	}
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 	res2->_this_Node2D->_this_Node->delete_Node(res2->_this_Node2D->_this_Node);//calls free(res2) and recursiv
@@ -705,7 +705,7 @@ static const Node* test_node_against_packed_scene_tree(const Node* n, const Pack
 	return NULL;
 }
 
-static void test_pksc_instanciate()
+static void test_pksc_instantiate()
 {
 	TscnParser parser;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_pksc_instanciate.tscn");
@@ -718,11 +718,11 @@ static void test_pksc_instanciate()
 			path_to_ps, "assets/test_pksc_instanciate.tscn");
 	if(!(cv.valid) || cv.v.ptr != parser.scene_root)
 	{
-		printf("FAILED ---  parsed scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate\n ");
+		printf("FAILED ---  parsed scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate\n ");
 	}
 	PackedScene* ps = (PackedScene*)(cv.v.ptr);
 
-	Node* my_game_root_node = iCluige.iPackedScene.instanciate(ps);
+	Node* my_game_root_node = iCluige.iPackedScene.instantiate(ps);
 
 //	Node2D* zzzzzzz = (Node2D*)(my_game_root_node->_sub_class);
 //	iCluige.iNode2D.move_local(zzzzzzz, (Vector2){ 1.f, 1.f });
@@ -755,7 +755,7 @@ static void test_pksc_instanciate()
 	if(diff != NULL)
 	{
 		char* pp = iCluige.iNode.get_path_mallocing(diff);
-		printf("FAILED --- instanced Node %s different from PackedScene  | test_pksc_instanciate\n ", pp);
+		printf("FAILED --- instanced Node %s different from PackedScene  | test_pksc_instantiate\n ", pp);
 		free(pp);
 	}
 
@@ -763,7 +763,7 @@ static void test_pksc_instanciate()
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser);
 }
 
-static void test_pksc_instanciate_with_instance()
+static void test_pksc_instantiate_with_instance()
 {
 	//sub-scene
 	TscnParser parser_note;
@@ -776,11 +776,11 @@ static void test_pksc_instanciate_with_instance()
 			path_to_ps, "assets/note.tscn");
 	if(!(cv.valid) || cv.v.ptr != parser_note.scene_root)
 	{
-		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+		printf("FAILED ---  'note' scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate_with_instance\n ");
 	}
 	PackedScene* ps = (PackedScene*)(cv.v.ptr);
 	char* dbg = iCluige.iPackedScene.debug_recrusive(ps, NULL);
-	//printf("test_pksc_instanciate_with_instance : \n%s\n\n", dbg);
+	//printf("test_pksc_instantiate_with_instance : \n%s\n\n", dbg);
 	char* wanted_dbg =
 "name = note_Node2D\n\
 type = Sprite2D\n\
@@ -791,7 +791,7 @@ svg_file_path = assets/note.svg\n\
  - children : 0\n\n";
 	if(!str_equals(dbg, wanted_dbg))
 	{
-		printf("FAILED --- 'note' packed scene is different from expected  | test_pksc_instanciate_with_instance\n");
+		printf("FAILED --- 'note' packed scene is different from expected  | test_pksc_instantiate_with_instance\n");
 	}
 	free(dbg);
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_note);
@@ -807,11 +807,11 @@ svg_file_path = assets/note.svg\n\
 			path_to_ps, "assets/cello.tscn");
 	if(!(cv.valid) || cv.v.ptr != parser_cello.scene_root)
 	{
-		printf("FAILED ---  'cello' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+		printf("FAILED ---  'cello' scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate_with_instance\n ");
 	}
 	ps = (PackedScene*)(cv.v.ptr);
 	dbg = iCluige.iPackedScene.debug_recrusive(ps, NULL);
-//	printf("test_pksc_instanciate_with_instance : \n%s\n\n", dbg);
+//	printf("test_pksc_instantiate_with_instance : \n%s\n\n", dbg);
 	wanted_dbg =
 "name = cello\n\
 type = Label\n\
@@ -831,7 +831,7 @@ position = Vector2(108, 84)\n\
 ";
 	if(!str_equals(dbg, wanted_dbg))
 	{
-		printf("FAILED --- 'cello' packed scene is different from expected  | test_pksc_instanciate_with_instance\n");
+		printf("FAILED --- 'cello' packed scene is different from expected  | test_pksc_instantiate_with_instance\n");
 	}
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_cello);
 
@@ -846,11 +846,11 @@ position = Vector2(108, 84)\n\
 			path_to_ps, "assets/orchestre.tscn");
 	if(!(cv.valid) || cv.v.ptr != parser_orchestr.scene_root)
 	{
-		printf("FAILED ---  'orchestre' scene not correctly registered in _dico_path_to_packed | test_pksc_instanciate_with_instance\n ");
+		printf("FAILED ---  'orchestre' scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate_with_instance\n ");
 	}
 	ps = (PackedScene*)(cv.v.ptr);
 	dbg = iCluige.iPackedScene.debug_recrusive(ps, NULL);
-//	printf("test_pksc_instanciate_with_instance : \n%s\n\n", dbg);
+//	printf("test_pksc_instantiate_with_instance : \n%s\n\n", dbg);
 	wanted_dbg =
 "name = orchestre\n\
 type = Node2D\n\
@@ -888,20 +888,20 @@ text = \"do re mi\"\n\
 \n";
 	if(!str_equals(dbg, wanted_dbg))
 	{
-		printf("FAILED --- 'orchestre' packed scene is different from expected  | test_pksc_instanciate_with_instance\n");
+		printf("FAILED --- 'orchestre' packed scene is different from expected  | test_pksc_instantiate_with_instance\n");
 	}
 	free(dbg);
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_orchestr);
 
-	//instanciate
-	Node* my_game_root_node = iCluige.iPackedScene.instanciate(ps);
+	//instantiate
+	Node* my_game_root_node = iCluige.iPackedScene.instantiate(ps);
 	iCluige.iNode.add_child(iCluige.public_root_2D, my_game_root_node);
 	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
 //
 //if(ZZZZZZZZZZZZZZZ)
 //{
 //	char* pp = iCluige.iNode.get_path_mallocing(diff);
-//	printf("FAILED --- instanced Node %s different from PackedScene  | test_pksc_instanciate\n ", pp);
+//	printf("FAILED --- instanced Node %s different from PackedScene  | test_pksc_instantiate\n ", pp);
 //	free(pp);
 //}
 //
@@ -909,6 +909,13 @@ text = \"do re mi\"\n\
 //	iCluige.iPackedScene.pre_delete_PackedScene(ps);
 }
 
+static const char* _dummy_str_test_script_before_parsing = "dummy_str_test_script_before_parsing";
+static Script* _instantiate_test_script_before_parsing(const SortedDictionary* parsed_params)
+{
+	Script* res = iCluige.iScript.new_Script();
+	res->_sub_class = (void*)_dummy_str_test_script_before_parsing;
+	return res;
+}
 
 static void test_script_before_parsing()
 {
@@ -919,7 +926,8 @@ static void test_script_before_parsing()
 //	iCluige.iScript.register_ScriptFactory(path, NULL);//should assert 'null factory'
 	ScriptFactory sf;
 	ScriptFactory* ssf = &sf;
-	iCluige.iScript.register_ScriptFactory(path, &sf);
+	sf.instantiate = _instantiate_test_script_before_parsing;
+	iCluige.iScript.register_ScriptFactory(path, ssf);
 
     SortedDictionary* fcties = &(iCluige.iScript.script_factories);
 //    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/tru");
@@ -930,16 +938,27 @@ static void test_script_before_parsing()
 		printf("FAILED --- should be valid  | %s %d\n ",
 			__FUNCTION__, 0);
 	}
+
+	Script* instantiated_s = iCluige.iScript.instantiate_from_factories_with_ext(
+			path, &(iCluige.iSortedDictionary.EMPTY));
+	const char* should_be_dummy = (char*)(instantiated_s->_sub_class);
+    if(!str_equals(should_be_dummy, "dummy_str_test_script_before_parsing"))
+    {
+		printf("FAILED --- should be 'dummy_str_test_script_before_parsing' | %s %d\n ",
+			__FUNCTION__, 1);
+	}
+	free(instantiated_s);
+
     Pair erased = iCluige.iSortedDictionary.erase(fcties, "res://path/truc");
     if(!str_equals((char*)(erased.first.ptr), "res://path/truc"))
     {
 		printf("FAILED --- should be 'res://path/truc'  --- (bug in SortedDictionary?)  | %s %d\n ",
-			__FUNCTION__, 1);
+			__FUNCTION__, 2);
 	}
     if(erased.second.ptr != ssf)
     {
 		printf("FAILED --- should be ==  --- (bug in SortedDictionary?)  | %s %d\n ",
-			__FUNCTION__, 2);
+			__FUNCTION__, 3);
 	}
 	free(erased.first.ptr);
 	//no free() for sf because in stack
@@ -957,7 +976,7 @@ void tscn_parser_all_tests()
 	test_FileLineReader();
 	test_TscnParser();
 
-	//printf("Test instanciate methods -----------------------------------------------------------------------------\n");
+	//printf("Test instantiate methods -----------------------------------------------------------------------------\n");
 	SortedDictionary parse_placeholder;
 	iCluige.iSortedDictionary.sorted_dictionary_alloc(&parse_placeholder, VT_POINTER, VT_POINTER, 10);
 	iCluige.iSortedDictionary.set_compare_keys_func(&parse_placeholder, iCluige.iDeque.default_compare_string_func);
@@ -967,16 +986,16 @@ void tscn_parser_all_tests()
 	SortedDictionary* fcties = &(iCluige.iNode.node_factories);
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Node");
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
-	Node* my_root = fcty->instanciate(&parse_placeholder);
+	Node* my_root = fcty->instantiate(&parse_placeholder);
 	utils_breakpoint_trick(my_root, false);//to prevent warning my_root not used
 
-	test_Node_instanciate();
-	test_Node2D_instanciate();
-	test_SpriteText_instanciate();
-	test_SpriteSVG_instanciate();
-	test_Camera2D_instanciate();
-	test_pksc_instanciate();
-	test_pksc_instanciate_with_instance();
+	test_Node_instantiate();
+	test_Node2D_instantiate();
+	test_SpriteText_instantiate();
+	test_SpriteSVG_instantiate();
+	test_Camera2D_instantiate();
+	test_pksc_instantiate();
+	test_pksc_instantiate_with_instance();
 
 	test_script_before_parsing();
 

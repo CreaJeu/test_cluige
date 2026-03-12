@@ -62,7 +62,7 @@ static void process_Transition(Script* this_Script, float elapsed_seconds)
 TransitionScript* newTransition(Node* this_Node)
 {
 	Script* new_Script = iCluige.iScript.new_Script();
-	iCluige.iScript.attach(new_Script, this_Node);
+	iCluige.iNode.set_script(this_Node, new_Script);
 	TransitionScript* newTransition = iCluige.checked_malloc(sizeof(TransitionScript));
 
 	newTransition->this_Script = new_Script;

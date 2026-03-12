@@ -12,13 +12,15 @@
 #include "node_test.h"
 #include "tscn_parser_test.h"
 
+static void trick_for_tests_from_scratch()
+{}
 
 int main()
 {
 	//SetConsoleOutputCP(CP_UTF8);
 
 	//init
-	cluige_init();//makes all roots, set all functions pointers, etc.
+	cluige_init(trick_for_tests_from_scratch);//makes all roots, set all functions pointers, etc.
 
 
 	// == printf tests ==

@@ -40,7 +40,7 @@ static void process_Player(Script* this_Script, float elapsed_seconds);
 PlayerScript* newPlayer(Node* this_Node)
 {
 	Script* new_Script = iCluige.iScript.new_Script();
-	iCluige.iScript.attach(new_Script, this_Node);
+	iCluige.iNode.set_script(this_Node, new_Script);//iCluige.iScript.attach(new_Script, this_Node);
 	PlayerScript* newPlayer = iCluige.checked_malloc(sizeof(PlayerScript));
 
 	newPlayer->this_Script = new_Script;
