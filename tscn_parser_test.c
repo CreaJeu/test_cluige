@@ -567,7 +567,7 @@ static void test_TscnParser()
 		if(strcmp(wanted_line, sub_dbg) != 0)
 		{
 			utils_breakpoint_trick(sub_dbg, true);
-			printf("FAILED --- parsing inconsistant with last known in test_TscnParser__wanted_res.txt line %d  | test_TscnParser \n ", i+1);
+			printf("FAILED --- parsing inconsistent with last known in test_TscnParser__wanted_res.txt line %d  | test_TscnParser \n ", i+1);
 			printf("\t%s \t\tshould be \n\t%s\n", sub_dbg, wanted_line);
 		}
 		iCluige.iFileLineReader.forget_lines_before(&wanted_res_flr, i);
@@ -705,6 +705,61 @@ static const Node* test_node_against_packed_scene_tree(const Node* n, const Pack
 	return NULL;
 }
 
+static const char* _dummy_str_test_script_before_parsing = "dummy_str_test_script_before_parsing";
+static Script* _instantiate_test_script_before_parsing(const SortedDictionary* parsed_params)
+{
+	Script* res = iCluige.iScript.new_Script();
+	res->_sub_class = (void*)_dummy_str_test_script_before_parsing;
+	return res;
+}
+
+static void test_script_before_parsing()
+{
+//	const char* path = "qzzretrz";//should assert '.' not found
+//	const char* path = "qzzret.rz";//should assert 'res://' not found
+//	const char* path = "res://.gdgd";//should assert 'too short'
+	const char* path = "path/truc.gd";
+//	iCluige.iScript.register_ScriptFactory(path, NULL);//should assert 'null factory'
+	ScriptFactory sf;
+	ScriptFactory* ssf = &sf;
+	sf.instantiate = _instantiate_test_script_before_parsing;
+	iCluige.iScript.register_ScriptFactory_with_ext(path, ssf);
+
+    SortedDictionary* fcties = &(iCluige.iScript.script_factories);
+//    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/tru");
+//    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/trucZ");
+    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "path/truc");
+    if(!(found.valid))
+    {
+		printf("FAILED --- should be valid  | %s %d\n ",
+			__FUNCTION__, 0);
+	}
+
+	Script* instantiated_s = iCluige.iScript.instantiate_from_factories_with_ext(
+			path, &(iCluige.iSortedDictionary.EMPTY));
+	const char* should_be_dummy = (char*)(instantiated_s->_sub_class);
+    if(!str_equals(should_be_dummy, "dummy_str_test_script_before_parsing"))
+    {
+		printf("FAILED --- should be 'dummy_str_test_script_before_parsing' | %s %d\n ",
+			__FUNCTION__, 1);
+	}
+	free(instantiated_s);
+
+    Pair erased = iCluige.iSortedDictionary.erase(fcties, "path/truc");
+    if(!str_equals((char*)(erased.first.ptr), "path/truc"))
+    {
+		printf("FAILED --- should be 'path/truc'  --- (bug in SortedDictionary?)  | %s %d\n ",
+			__FUNCTION__, 2);
+	}
+    if(erased.second.ptr != ssf)
+    {
+		printf("FAILED --- should be ==  --- (bug in SortedDictionary?)  | %s %d\n ",
+			__FUNCTION__, 3);
+	}
+	free(erased.first.ptr);
+	//no free() for sf because in stack
+}
+
 static void test_pksc_instantiate()
 {
 	TscnParser parser;
@@ -721,6 +776,10 @@ static void test_pksc_instantiate()
 		printf("FAILED ---  parsed scene not correctly registered in _dico_path_to_packed | test_pksc_instantiate\n ");
 	}
 	PackedScene* ps = (PackedScene*)(cv.v.ptr);
+
+	ScriptFactory sf;
+	sf.instantiate = _instantiate_test_script_before_parsing;
+	iCluige.iScript.register_ScriptFactory_no_ext("Label", &sf);
 
 	Node* my_game_root_node = iCluige.iPackedScene.instantiate(ps);
 
@@ -759,6 +818,7 @@ static void test_pksc_instantiate()
 		free(pp);
 	}
 
+	iCluige.iSortedDictionary.erase(&(iCluige.iScript.script_factories), "Label");
 //	iCluige.iPackedScene.pre_delete_PackedScene(ps);
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser);
 }
@@ -893,10 +953,16 @@ text = \"do re mi\"\n\
 	free(dbg);
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_orchestr);
 
+	ScriptFactory sf;
+	sf.instantiate = _instantiate_test_script_before_parsing;
+	iCluige.iScript.register_ScriptFactory_no_ext("note", &sf);
+
 	//instantiate
 	Node* my_game_root_node = iCluige.iPackedScene.instantiate(ps);
 	iCluige.iNode.add_child(iCluige.public_root_2D, my_game_root_node);
 	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
+
+	iCluige.iSortedDictionary.erase(&(iCluige.iScript.script_factories), "note");
 //
 //if(ZZZZZZZZZZZZZZZ)
 //{
@@ -907,61 +973,6 @@ text = \"do re mi\"\n\
 //
 
 //	iCluige.iPackedScene.pre_delete_PackedScene(ps);
-}
-
-static const char* _dummy_str_test_script_before_parsing = "dummy_str_test_script_before_parsing";
-static Script* _instantiate_test_script_before_parsing(const SortedDictionary* parsed_params)
-{
-	Script* res = iCluige.iScript.new_Script();
-	res->_sub_class = (void*)_dummy_str_test_script_before_parsing;
-	return res;
-}
-
-static void test_script_before_parsing()
-{
-//	const char* path = "qzzretrz";//should assert '.' not found
-//	const char* path = "qzzret.rz";//should assert 'res://' not found
-//	const char* path = "res://.gdgd";//should assert 'too short'
-	const char* path = "res://path/truc.gd";
-//	iCluige.iScript.register_ScriptFactory(path, NULL);//should assert 'null factory'
-	ScriptFactory sf;
-	ScriptFactory* ssf = &sf;
-	sf.instantiate = _instantiate_test_script_before_parsing;
-	iCluige.iScript.register_ScriptFactory(path, ssf);
-
-    SortedDictionary* fcties = &(iCluige.iScript.script_factories);
-//    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/tru");
-//    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/trucZ");
-    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/truc");
-    if(!(found.valid))
-    {
-		printf("FAILED --- should be valid  | %s %d\n ",
-			__FUNCTION__, 0);
-	}
-
-	Script* instantiated_s = iCluige.iScript.instantiate_from_factories_with_ext(
-			path, &(iCluige.iSortedDictionary.EMPTY));
-	const char* should_be_dummy = (char*)(instantiated_s->_sub_class);
-    if(!str_equals(should_be_dummy, "dummy_str_test_script_before_parsing"))
-    {
-		printf("FAILED --- should be 'dummy_str_test_script_before_parsing' | %s %d\n ",
-			__FUNCTION__, 1);
-	}
-	free(instantiated_s);
-
-    Pair erased = iCluige.iSortedDictionary.erase(fcties, "res://path/truc");
-    if(!str_equals((char*)(erased.first.ptr), "res://path/truc"))
-    {
-		printf("FAILED --- should be 'res://path/truc'  --- (bug in SortedDictionary?)  | %s %d\n ",
-			__FUNCTION__, 2);
-	}
-    if(erased.second.ptr != ssf)
-    {
-		printf("FAILED --- should be ==  --- (bug in SortedDictionary?)  | %s %d\n ",
-			__FUNCTION__, 3);
-	}
-	free(erased.first.ptr);
-	//no free() for sf because in stack
 }
 
 void tscn_parser_all_tests()
@@ -994,10 +1005,10 @@ void tscn_parser_all_tests()
 	test_SpriteText_instantiate();
 	test_SpriteSVG_instantiate();
 	test_Camera2D_instantiate();
+	test_script_before_parsing();
 	test_pksc_instantiate();
 	test_pksc_instantiate_with_instance();
 
-	test_script_before_parsing();
 
 	//clear all public_root_2D children for a fresh start
 	int count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
