@@ -361,11 +361,13 @@ instructions\n\
 void inputs_tree_test()
 {
 	JUMP = iCluige.iInput.add_action("JUMP");
-	iCluige.iInput.bind_key(JUMP, ' ');
+	iCluige.iInput.bind_key("JUMP", ' ');
 }
 
 void end_tree_test()
 {
+	iCluige.iInput.un_bind_key_all_actions(' ');
+	iCluige.iInput.remove_last_available_action();//"JUMP"
 	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
 	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game_tree_test");
 	iCluige.iNode.queue_free(game_root);

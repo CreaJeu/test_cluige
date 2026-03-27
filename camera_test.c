@@ -153,47 +153,24 @@ static void process_Player(Script* this_Script, float elapsed_seconds)
 		iCluige.iSpriteText.set_text(test_sprite_text,debug_str);
 	}
 	//free(debug_str);
-
-
-
 }
-
-
 
 void inputs_camera()
 {
-	UP = iCluige.iInput.add_action("UP");
-	iCluige.iInput.bind_key(UP, 'z');
-	iCluige.iInput.bind_key(UP, 'Z');
-
-	LEFT = iCluige.iInput.add_action("LEFT");
-	iCluige.iInput.bind_key(LEFT, 'q');
-	iCluige.iInput.bind_key(LEFT, 'Q');
-
-	RIGHT = iCluige.iInput.add_action("RIGHT");
-	iCluige.iInput.bind_key(RIGHT, 'd');
-	iCluige.iInput.bind_key(RIGHT, 'D');
-
-	DOWN = iCluige.iInput.add_action("DOWN");
-	iCluige.iInput.bind_key(DOWN, 's');
-	iCluige.iInput.bind_key(DOWN, 'S');
-
-
-	ZOOM = iCluige.iInput.add_action("ZOOM");
-	iCluige.iInput.bind_key(ZOOM, 't');
-	iCluige.iInput.bind_key(ZOOM, 'T');
-
-	ROT_90 = iCluige.iInput.add_action("ROT_90");
-	iCluige.iInput.bind_key(ROT_90, 'j');
-	iCluige.iInput.bind_key(ROT_90, 'J');
-
-	ROT_180 = iCluige.iInput.add_action("ROT_180");
-	iCluige.iInput.bind_key(ROT_180, 'k');
-	iCluige.iInput.bind_key(ROT_180, 'K');
-
-	ROT_45 = iCluige.iInput.add_action("ROT_45");
-	iCluige.iInput.bind_key(ROT_45, 'l');
-	iCluige.iInput.bind_key(ROT_45, 'L');
+	int* actions_ids[] =    {&UP,    &LEFT,  &RIGHT,  &DOWN,  &ZOOM,  &ROT_90,  &ROT_180,  &ROT_45};
+	char* actions_names[] = {"UP",   "LEFT", "RIGHT", "DOWN", "ZOOM", "ROT_90", "ROT_180", "ROT_45"};
+	char* keys_array[] =    {"zZwW", "qQaA", "dD",    "sS",   "tT",   "jJ",     "kK",      "lL"};
+	int nb_act = sizeof(actions_ids) / sizeof(int*);
+	for(int i=0; i<nb_act; i++)
+	{
+		*(actions_ids[i]) = iCluige.iInput.add_action(actions_names[i]);
+		char* keys = keys_array[i];
+		int n = strlen(keys);
+		for(int j=0; j<n; j++)
+		{
+			iCluige.iInput.bind_key(actions_names[i], keys[j]);
+		}
+	}
 
 //	ROT_270 = iCluige.iInput.add_action("ROT_270");
 //	iCluige.iInput.bind_key(ROT_270, 'm');
@@ -342,6 +319,19 @@ void launch_camera()
 
 void end_camera_test()
 {
+	//keep &UP,    &LEFT,  &RIGHT,  &DOWN
+	int* actions_ids[] =    {&ZOOM,  &ROT_90,  &ROT_180,  &ROT_45};
+	char* keys =             "tTjJkKlL";
+	int n = strlen(keys);
+	for(int j=0; j<n; j++)
+	{
+		iCluige.iInput.un_bind_key_all_actions(keys[j]);
+	}
+	int nb_act = sizeof(actions_ids) / sizeof(int*);
+	for(int i=0; i<nb_act; i++)
+	{
+		iCluige.iInput.remove_last_available_action();
+	}
 	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
 	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game");
 	iCluige.iNode.queue_free(game_root);
@@ -359,7 +349,7 @@ TestStep make_camera_test_step()
  Test 2 : Camera\
  \n\n\
  ~ instructions ~\n\
- Move Camera : ZQSD\n\
+ Move Camera : ZQSD or WASD\n\
  Zoom : T\n\
  ROT_45 : L\n\
  ROT_90 : J\n\

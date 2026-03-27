@@ -6,8 +6,9 @@
 
 //graphical tests
 #include "tree_test.h"
-#include "recursive_tscn_test.h"
 #include "camera_test.h"
+#include "recursive_tscn_test.h"
+#include "godot_import_test.h"
 
 //re-declared because extern in .h (like static in c++)
 //int UP;
@@ -85,13 +86,17 @@ TransitionScript* newTransition(Node* this_Node)
 
 void init_transition()
 {
-	const int NB_TESTS = 3;
+	const int NB_TESTS = 4;
 	allSteps = iCluige.checked_malloc((NB_TESTS + 1) * sizeof(TestStep));
 	//never freed, because app-long life
 	int c = 0;
 	allSteps[c++] = make_tree_test_step();
 	allSteps[c++] = make_camera_test_step();
+	CLUIGE_ASSERT(c <= NB_TESTS, "transition.c::init_transition() : easy bug : NB_TEST too small");
 	allSteps[c++] = make_recursive_tscn_test_step();
+	CLUIGE_ASSERT(c <= NB_TESTS, "transition.c::init_transition() : easy bug : NB_TEST too small");
+	allSteps[c++] = make_godot_test_step();
+	CLUIGE_ASSERT(c <= NB_TESTS, "transition.c::init_transition() : easy bug : NB_TEST too small");
 	allSteps[c++] = (TestStep){ NULL, NULL, NULL, NULL,
 "\
  ~ End of last test ~\n\
@@ -105,8 +110,8 @@ void init_transition()
 	newTransition(transitionNode);// attach script to The Transition node
 
 	NEXT = iCluige.iInput.add_action("NEXT");
-	iCluige.iInput.bind_key(NEXT, 'n');
-	iCluige.iInput.bind_key(NEXT, 'N');
+	iCluige.iInput.bind_key("NEXT", 'n');
+	iCluige.iInput.bind_key("NEXT", 'N');
 
 //	EXIT_ACTION = iCluige.iInput.add_action("EXIT_ACTION");
 //	iCluige.iInput.bind_key(EXIT_ACTION, 'x');

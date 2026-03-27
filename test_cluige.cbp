@@ -91,6 +91,14 @@
 		</Unit>
 		<Unit filename="camera_test.h" />
 		<Unit filename="common_test.h" />
+		<Unit filename="godot_example/scripts/tenth_of_screen.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="godot_example/scripts/tenth_of_screen.h" />
+		<Unit filename="godot_import_test.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="godot_import_test.h" />
 		<Unit filename="icon.svg" />
 		<Unit filename="main_cluige_test.c">
 			<Option compilerVar="CC" />
@@ -99,6 +107,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="node_test.h" />
+		<Unit filename="project_dot_godot_parser_test.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="project_dot_godot_parser_test.h" />
 		<Unit filename="recursive_tscn_test.c">
 			<Option compilerVar="CC" />
 		</Unit>
