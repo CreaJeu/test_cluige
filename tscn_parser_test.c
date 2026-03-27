@@ -524,7 +524,7 @@ static void test_FileLineReader()
 static void test_TscnParser()
 {
 	TscnParser parser;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_TscnParser.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_TscnParser.tscn", 111);
 //	bool ok = parser.read_line(&parser);
 //	ok = parser.read_line(&parser);
 //	ok = parser.ignore_non_node(&parser);
@@ -763,7 +763,7 @@ static void test_script_before_parsing()
 static void test_pksc_instantiate()
 {
 	TscnParser parser;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_pksc_instanciate.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_pksc_instanciate.tscn", 111);
 	bool ok = parser.parse_scene(&parser);
 	utils_breakpoint_trick(&ok, false);
 //	char* dbg = iCluige.iPackedScene.debug_recrusive(parser.scene_root, NULL);
@@ -827,7 +827,7 @@ static void test_pksc_instantiate_with_instance()
 {
 	//sub-scene
 	TscnParser parser_note;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser_note, "assets/note.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_note, "assets/note.tscn", 111);
 	bool ok = parser_note.parse_scene(&parser_note);
 	utils_breakpoint_trick(&ok, false);
 
@@ -858,7 +858,7 @@ svg_file_path = assets/note.svg\n\
 
 	//mid-scene
 	TscnParser parser_cello;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser_cello, "assets/cello.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_cello, "assets/cello.tscn", 111);
 	ok = parser_cello.parse_scene(&parser_cello);
 	utils_breakpoint_trick(&ok, false);
 //	Pair* pr = (Pair*)(iCluige.iDeque.at(&(parser_cello._dico_id_to_path._pairs), 0).ptr);
@@ -897,7 +897,7 @@ position = Vector2(108, 84)\n\
 
 	//over-scene
 	TscnParser parser_orchestr;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser_orchestr, "assets/orchestre.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_orchestr, "assets/orchestre.tscn", 111);
 	ok = parser_orchestr.parse_scene(&parser_orchestr);
 	utils_breakpoint_trick(&ok, false);
 

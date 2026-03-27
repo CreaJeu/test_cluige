@@ -48,7 +48,7 @@ void launch_recursive_tscn_test()
 	recursive_tscn_test_started = true;
 
 	TscnParser parser_sub;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser_sub, "assets/tmp_test/sub.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_sub, "assets/tmp_test/sub.tscn", 2000);
 	bool ok = parser_sub.parse_scene(&parser_sub);
 	utils_breakpoint_trick(&ok, false);
 
@@ -62,7 +62,7 @@ void launch_recursive_tscn_test()
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_sub);
 
 	TscnParser parser_up;
-	iCluige.iTscnParser.tscn_parser_alloc(&parser_up, "assets/tmp_test/up.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&parser_up, "assets/tmp_test/up.tscn", 2000);
 	ok = parser_up.parse_scene(&parser_up);
 	utils_breakpoint_trick(&ok, false);
 

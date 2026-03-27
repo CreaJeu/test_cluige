@@ -17,13 +17,13 @@ void launch_godot_test()
 	iCluige.iScript.register_ScriptFactory_no_ext("scripts/tenth_of_screen", sf);
 
 	TscnParser tp_memo;
-	iCluige.iTscnParser.tscn_parser_alloc(&tp_memo, "godot_only/memo.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&tp_memo, "godot_only/memo.tscn", 2000);
 	bool ok = tp_memo.parse_scene(&tp_memo);
 	utils_breakpoint_trick(&ok, false);
 	iCluige.iTscnParser.pre_delete_TscnParser(&tp_memo);
 
 	TscnParser tp_main;
-	iCluige.iTscnParser.tscn_parser_alloc(&tp_main, "scenes/main.tscn");
+	iCluige.iTscnParser.tscn_parser_alloc(&tp_main, "scenes/main.tscn", 2000);
 	ok = tp_main.parse_scene(&tp_main);
 	utils_breakpoint_trick(&ok, !ok);
 	iCluige.iTscnParser.pre_delete_TscnParser(&tp_main);
