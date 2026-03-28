@@ -59,9 +59,5 @@ void process_TenthOfScreenScript(Script* this_Script, float delta)
 		dx += this_TenthOfScreenScript->speed;
 	}
 	Node2D* this_Node2D = (Node2D*)(this_Script->node->_sub_class);
-//	iCluige.iNode2D.move_local(this_Node2D, (Vector2){dx * delta, dy * delta});
-//limitation until investingation on curses napms()
-// (or until cluige has better "pressed/just/released" input implementation ?)
-	iCluige.iNode2D.move_local(this_Node2D,
-			(Vector2){dx * iCluige.wanted_frame_seconds, dy * iCluige.wanted_frame_seconds});
+	iCluige.iNode2D.move_local(this_Node2D, (Vector2){dx * delta, dy * delta});
 }
