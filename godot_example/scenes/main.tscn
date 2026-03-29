@@ -29,7 +29,7 @@ label_settings = ExtResource("1_o5qli")
 [node name="memo_tscn" parent="." unique_id=852180658 instance=ExtResource("2_0wfyh")]
 
 [node name="tenthOfScreen_SpriteSVG" type="Sprite2D" parent="." unique_id=891862331]
-position = Vector2(8, 37)
+position = Vector2(13, 31)
 texture = ExtResource("3_sugp2")
 script = ExtResource("4_jyhfs")
 speed = 40.0

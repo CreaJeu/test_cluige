@@ -237,7 +237,7 @@ void launch_camera()
 	iCluige.iNode.set_name(chest_node, "Chest");
 	iCluige.iSpriteSVG.parse_file(chestSprite,"assets/chest.svg");
 	iCluige.iNode.add_child(gameRootRootNode,chest_node);
-	iCluige.iNode2D.move_local(chestSprite->_this_Node2D, (Vector2){5, -150});
+	iCluige.iNode2D.move_local(chestSprite->_this_Node2D, (Vector2){40, 43});
 
 	/*
 	//Title node
@@ -297,8 +297,9 @@ void launch_camera()
 	// add to player the sprite node
 	iCluige.iNode.add_child(playerNode, godot_svg->_this_Node2D->_this_Node);
 	iCluige.iNode.set_name(godot_svg->_this_Node2D->_this_Node,"SpriteSVG2D");
+	godot_svg->centered = false;
 	iCluige.iSpriteSVG.parse_file(godot_svg,"assets/minicat.svg");
-	iCluige.iNode2D.move_local(godot_svg->_this_Node2D,(Vector2){0., 2.});
+	iCluige.iNode2D.move_local(godot_svg->_this_Node2D,(Vector2){1., 2.});
 
 	//iCluige.iNode.print_tree_pretty(gameRootRootNode);
 	//printf("test");
