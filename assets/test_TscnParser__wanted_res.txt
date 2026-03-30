@@ -12,10 +12,10 @@ offset_right = 90.0
 script = Label
 text = "azertyuio dghjk 
 sdertgyh sdrtyujk b
-vq gfd \"entre guillemets\" et & puis ça puis é puis < puis [ puis = voilà
+vq gfd "entre guillemets" et & puis ça puis é puis < puis [ puis = voilà
 kjsqfn,hujr jkdyty dkjy xjt dxh
 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"
-unAtrrString = "une valeur \"ou\" ouech"
+unAtrrString = "une valeur "ou" ouech"
 unAttribut = 6
 visible_characters = 0
 visible_ratio = 0.0
@@ -73,6 +73,6 @@ type = Label
 parent = .
 offset_bottom = 23.0
 offset_right = 40.0
-text = "accolade fourbe } antislash fourbe \\"
+text = "accolade fourbe } antislash fourbe \"
  - children : 0
 

@@ -24,8 +24,8 @@ int main()
 	cluige_init(trick_for_tests_from_scratch);//makes all roots, set all functions pointers, etc.
 
 	iCluige.window_title = "test cluige";
-	iCluige.window_initial_size_cols = 110;
-	iCluige.window_initial_size_lines = 50;
+	iCluige.window_initial_size_cols = 117;
+	iCluige.window_initial_size_lines = 52;
 
 
 	// == printf tests ==

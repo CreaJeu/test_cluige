@@ -70,11 +70,13 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-static-libgcc" />
 					<Add option="-Wl,-rpath,&apos;\\$$$$ORIGIN&apos;" />
 					<Add library="XCurses" />
 					<Add library="cluige" />
 					<Add directory="../PDCurses/x11" />
-					<Add directory="../cluige/bin/Debug" />
+					<Add directory="../cluige/bin/Release" />
+					<Add directory="." />
 				</Linker>
 			</Target>
 		</Build>
