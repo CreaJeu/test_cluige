@@ -10,7 +10,7 @@ if "%~1"=="" (
 	echo      %USAGE1%
 	echo      %USAGE2%
 	echo      %USAGE3%
-	exit /b 0
+	exit /b 1
 )
 
 if not "%~1"=="Debug" if not "%~1"=="Release" (
@@ -19,7 +19,7 @@ if not "%~1"=="Debug" if not "%~1"=="Release" (
 	echo      %USAGE1%
 	echo      %USAGE2%
 	echo      %USAGE3%
-	exit /b 0
+	exit /b 2
 )
 
 if "%~2"=="" (
@@ -28,7 +28,7 @@ if "%~2"=="" (
 	echo      %USAGE1%
 	echo      %USAGE2%
 	echo      %USAGE3%
-	exit /b 0
+	exit /b 3
 )
 
 if not exist "%~2\" (
@@ -37,16 +37,16 @@ if not exist "%~2\" (
 	echo      %USAGE1%
 	echo      %USAGE2%
 	echo      %USAGE3%
-	exit /b 0
+	exit /b 4
 )
 
-xcopy /E /V /Y /F  ..\PDCurses\wincon\my%~1\pdcurses.dll           %~2
-xcopy /E /V /Y /F  ..\cluige\bin\%~1\cluige.dll                    %~2
-xcopy /E /V /Y /F  bin\%~1\test_cluige.exe          %~2
-xcopy /E /V /Y /F /D /I  assets                        %~2\assets
-xcopy /E /V /Y /F /D  godot_example\project.godot      %~2\godot_example\
-xcopy /E /V /Y /F /D  godot_example\assets\*.svg       %~2\godot_example\assets\
-xcopy /E /V /Y /F /D  godot_example\godot_only\*.tscn  %~2\godot_example\godot_only\
-xcopy /E /V /Y /F /D  godot_example\scenes\*.tscn      %~2\godot_example\scenes\
+xcopy /E /V /Y /F  ..\PDCurses\wincon\my%~1\pdcurses.dll %~2
+xcopy /E /V /Y /F  ..\cluige\bin\%~1\cluige.dll          %~2
+xcopy /E /V /Y /F  bin\%~1\test_cluige.exe               %~2
+xcopy /E /V /Y /F /D /I  assets                          %~2\assets
+xcopy /E /V /Y /F /D  godot_example\project.godot        %~2\godot_example\
+xcopy /E /V /Y /F /D  godot_example\assets\*.svg         %~2\godot_example\assets\
+xcopy /E /V /Y /F /D  godot_example\godot_only\*.tscn    %~2\godot_example\godot_only\
+xcopy /E /V /Y /F /D  godot_example\scenes\*.tscn        %~2\godot_example\scenes\
 
 echo ok
