@@ -725,12 +725,12 @@ static void test_script_before_parsing()
 	sf.instantiate = _instantiate_test_script_before_parsing;
 	iCluige.iScript.register_ScriptFactory_with_ext(path, ssf);
 
-    SortedDictionary* fcties = &(iCluige.iScript.script_factories);
-//    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/tru");
-//    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/trucZ");
-    Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "path/truc");
-    if(!(found.valid))
-    {
+	SortedDictionary* fcties = &(iCluige.iScript.script_factories);
+//	Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/tru");
+//	Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "res://path/trucZ");
+	Checked_Variant found = iCluige.iSortedDictionary.get(fcties, "path/truc");
+	if(!(found.valid))
+	{
 		printf("FAILED --- should be valid  | %s %d\n ",
 			__FUNCTION__, 0);
 	}
@@ -738,21 +738,21 @@ static void test_script_before_parsing()
 	Script* instantiated_s = iCluige.iScript.instantiate_from_factories_with_ext(
 			path, &(iCluige.iSortedDictionary.EMPTY));
 	const char* should_be_dummy = (char*)(instantiated_s->_sub_class);
-    if(!str_equals(should_be_dummy, "dummy_str_test_script_before_parsing"))
-    {
+	if(!str_equals(should_be_dummy, "dummy_str_test_script_before_parsing"))
+	{
 		printf("FAILED --- should be 'dummy_str_test_script_before_parsing' | %s %d\n ",
 			__FUNCTION__, 1);
 	}
 	free(instantiated_s);
 
-    Pair erased = iCluige.iSortedDictionary.erase(fcties, "path/truc");
-    if(!str_equals((char*)(erased.first.ptr), "path/truc"))
-    {
+	Pair erased = iCluige.iSortedDictionary.erase(fcties, "path/truc");
+	if(!str_equals((char*)(erased.first.ptr), "path/truc"))
+	{
 		printf("FAILED --- should be 'path/truc'  --- (bug in SortedDictionary?)  | %s %d\n ",
 			__FUNCTION__, 2);
 	}
-    if(erased.second.ptr != ssf)
-    {
+	if(erased.second.ptr != ssf)
+	{
 		printf("FAILED --- should be ==  --- (bug in SortedDictionary?)  | %s %d\n ",
 			__FUNCTION__, 3);
 	}
