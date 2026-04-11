@@ -358,7 +358,7 @@ static void test_SpriteSVG_instantiate()
 	}
 	Path2D* path = (Path2D*)(iCluige.iDeque.at(&(res2->paths), 0).ptr);
 	Vector2* point0 = (Vector2*)(iCluige.iDeque.at(&(path->_points), 0).ptr);
-	utils_breakpoint_trick(point0, false);
+	CLUIGE_BREAKPOINT(point0, false);
 
 	iCluige.iSortedDictionary.pre_delete_SortedDictionary(&placeholder_dico);
 	res2->_this_Node2D->_this_Node->delete_Node(res2->_this_Node2D->_this_Node);//calls free(res2) and recursiv
@@ -541,8 +541,8 @@ static void test_TscnParser()
 	{
 		printf("FAILED --- should be not null  | test_TscnParser %d\n ", 2);
 	}
-	utils_breakpoint_trick(&ok, false);
-	utils_breakpoint_trick(dbg, false);
+	CLUIGE_BREAKPOINT(&ok, false);
+	CLUIGE_BREAKPOINT(dbg, false);
 //	printf("%s\n\n", dbg);
 	if(false)
 	{ //don't re-generate unless wanted evolution in those test results
@@ -566,7 +566,7 @@ static void test_TscnParser()
 		*(sub_dbg + line_len) = '\0';
 		if(strcmp(wanted_line, sub_dbg) != 0)
 		{
-			utils_breakpoint_trick(sub_dbg, true);
+			CLUIGE_BREAKPOINT(sub_dbg, true);
 			printf("FAILED --- parsing inconsistent with last known in test_TscnParser__wanted_res.txt line %d  | test_TscnParser \n ", i+1);
 			printf("\t%s \t\tshould be \n\t%s\n", sub_dbg, wanted_line);
 		}
@@ -680,7 +680,7 @@ static const Node* test_node_against_packed_scene(const Node* n, const PackedSce
 			}
 		}
 	}
-	utils_breakpoint_trick(ps, 00=="warning : found type is not (yet) tested in PackedScene/Node");
+	CLUIGE_BREAKPOINT(ps, 00=="warning : found type is not (yet) tested in PackedScene/Node");
 	return NULL;
 }
 
@@ -765,7 +765,7 @@ static void test_pksc_instantiate()
 	TscnParser parser;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser, "assets/test_pksc_instanciate.tscn", 111);
 	bool ok = parser.parse_scene(&parser);
-	utils_breakpoint_trick(&ok, false);
+	CLUIGE_BREAKPOINT(&ok, false);
 //	char* dbg = iCluige.iPackedScene.debug_recrusive(parser.scene_root, NULL);
 
 	SortedDictionary* path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
@@ -829,7 +829,7 @@ static void test_pksc_instantiate_with_instance()
 	TscnParser parser_note;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser_note, "assets/note.tscn", 111);
 	bool ok = parser_note.parse_scene(&parser_note);
-	utils_breakpoint_trick(&ok, false);
+	CLUIGE_BREAKPOINT(&ok, false);
 
 	SortedDictionary* path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
 	Checked_Variant cv = iCluige.iSortedDictionary.get(
@@ -860,7 +860,7 @@ svg_file_path = assets/note.svg\n\
 	TscnParser parser_cello;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser_cello, "assets/cello.tscn", 111);
 	ok = parser_cello.parse_scene(&parser_cello);
-	utils_breakpoint_trick(&ok, false);
+	CLUIGE_BREAKPOINT(&ok, false);
 //	Pair* pr = (Pair*)(iCluige.iDeque.at(&(parser_cello._dico_id_to_path._pairs), 0).ptr);
 //	dbg = (char*)(pr->second.ptr);
 	cv = iCluige.iSortedDictionary.get(
@@ -899,7 +899,7 @@ position = Vector2(108, 84)\n\
 	TscnParser parser_orchestr;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser_orchestr, "assets/orchestre.tscn", 111);
 	ok = parser_orchestr.parse_scene(&parser_orchestr);
-	utils_breakpoint_trick(&ok, false);
+	CLUIGE_BREAKPOINT(&ok, false);
 
 	path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
 	cv = iCluige.iSortedDictionary.get(
@@ -998,7 +998,7 @@ void tscn_parser_all_tests()
 	Checked_Variant cv_fcty = iCluige.iSortedDictionary.get(fcties, "Node");
 	NodeFactory* fcty = (NodeFactory*)(cv_fcty.v.ptr);
 	Node* my_root = fcty->instantiate(&parse_placeholder);
-	utils_breakpoint_trick(my_root, false);//to prevent warning my_root not used
+	CLUIGE_BREAKPOINT(my_root, false);//to prevent warning my_root not used
 
 	test_Node_instantiate();
 	test_Node2D_instantiate();

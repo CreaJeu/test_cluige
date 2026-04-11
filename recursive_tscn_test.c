@@ -50,7 +50,7 @@ void launch_recursive_tscn_test()
 	TscnParser parser_sub;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser_sub, "assets/tmp_test/sub.tscn", 2000);
 	bool ok = parser_sub.parse_scene(&parser_sub);
-	utils_breakpoint_trick(&ok, false);
+	CLUIGE_BREAKPOINT(&ok, false);
 
 	SortedDictionary* path_to_ps = &(iCluige.iPackedScene.dico_path_to_packed);
 	Checked_Variant cv = iCluige.iSortedDictionary.get(
@@ -64,7 +64,7 @@ void launch_recursive_tscn_test()
 	TscnParser parser_up;
 	iCluige.iTscnParser.tscn_parser_alloc(&parser_up, "assets/tmp_test/up.tscn", 2000);
 	ok = parser_up.parse_scene(&parser_up);
-	utils_breakpoint_trick(&ok, false);
+	CLUIGE_BREAKPOINT(&ok, false);
 
 	cv = iCluige.iSortedDictionary.get(
 			path_to_ps, "assets/tmp_test/up.tscn");

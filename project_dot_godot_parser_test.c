@@ -15,7 +15,7 @@ static void test__comment()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 0);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	const char* wanted_str = "; Engine configuration file.\n";
 	const char* read_str = pdgp._dbg_curr_line(&pdgp);
@@ -23,7 +23,7 @@ static void test__comment()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", read_str, wanted_str,
 			__FUNCTION__, 1);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	iCluige.iProjectDotGodotParser.pre_delete_ProjectDotGodotParser(&pdgp);
 }
@@ -43,7 +43,7 @@ static void test__blank_line()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 0);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	const char* wanted_str = "\n";
 	const char* read_str = pdgp._dbg_curr_line(&pdgp);
@@ -51,7 +51,7 @@ static void test__blank_line()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", read_str, wanted_str,
 			__FUNCTION__, 1);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	iCluige.iProjectDotGodotParser.pre_delete_ProjectDotGodotParser(&pdgp);
 }
@@ -70,7 +70,7 @@ static void test__section()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 0);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	const char* wanted_str = "[accessibility]\n";
 	const char* read_str = pdgp._dbg_curr_line(&pdgp);
@@ -78,7 +78,7 @@ static void test__section()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", read_str, wanted_str,
 			__FUNCTION__, 1);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	iCluige.iProjectDotGodotParser.pre_delete_ProjectDotGodotParser(&pdgp);
 }
@@ -97,7 +97,7 @@ static void test__ignored()
 	{
 		printf("FAILED --- should be false | %s %d\n ",
 			__FUNCTION__, 0);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	const char* wanted_str = "config_version=5\n";
 	const char* read_str = pdgp._dbg_curr_line(&pdgp);
@@ -105,7 +105,7 @@ static void test__ignored()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", read_str, wanted_str,
 			__FUNCTION__, 1);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	pdgp._current_line_i++;
 	ok = pdgp._ignored(&pdgp);
@@ -118,7 +118,7 @@ static void test__ignored()
 	{
 		printf("FAILED --- should be false | %s %d\n ",
 			__FUNCTION__, 2);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	wanted_str = "general/accessibility_support=2\n";
 	read_str = pdgp._dbg_curr_line(&pdgp);
@@ -126,7 +126,7 @@ static void test__ignored()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", read_str, wanted_str,
 			__FUNCTION__, 3);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	iCluige.iProjectDotGodotParser.pre_delete_ProjectDotGodotParser(&pdgp);
 }
@@ -148,7 +148,7 @@ static void test__param_value()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 0);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	char* dbg_dic = iCluige.iSortedDictionary.debug_str_str(&(pdgp._dico_params));
 	char* wanted_str = "/config_version = 5\n - nb elems : 1";
@@ -156,7 +156,7 @@ static void test__param_value()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", dbg_dic, wanted_str,
 			__FUNCTION__, 1);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	free(dbg_dic);
 	iCluige.iSortedDictionary.erase(&(pdgp._dico_params), "/config_version");
@@ -169,7 +169,7 @@ static void test__param_value()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 2);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	dbg_dic = iCluige.iSortedDictionary.debug_str_str(&(pdgp._dico_params));
 	wanted_str = "/config/name = \"bigDotGodot\"\n - nb elems : 1";
@@ -177,7 +177,7 @@ static void test__param_value()
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", dbg_dic, wanted_str,
 			__FUNCTION__, 3);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	free(dbg_dic);
 	iCluige.iSortedDictionary.erase(&(pdgp._dico_params), "/config/name");
@@ -190,7 +190,7 @@ static void test__param_value()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 4);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	dbg_dic = iCluige.iSortedDictionary.debug_str_str(&(pdgp._dico_params));
 	wanted_str =
@@ -203,7 +203,7 @@ troisième ligne sans eol\"\n\
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", dbg_dic, wanted_str,
 			__FUNCTION__, 5);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	free(dbg_dic);
 	iCluige.iSortedDictionary.erase(&(pdgp._dico_params), "/config/description");
@@ -216,7 +216,7 @@ troisième ligne sans eol\"\n\
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 6);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	dbg_dic = iCluige.iSortedDictionary.debug_str_str(&(pdgp._dico_params));
 	wanted_str =
@@ -230,7 +230,7 @@ troisième ligne sans eol\"\n\
 	{
 		printf("FAILED --- unexpected '%s' instead of '%s' | %s %d\n ", dbg_dic, wanted_str,
 			__FUNCTION__, 7);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	free(dbg_dic);
 	iCluige.iSortedDictionary.erase(&(pdgp._dico_params), "/gdscript/warnings/directory_rules");
@@ -243,7 +243,7 @@ troisième ligne sans eol\"\n\
 	{
 		printf("FAILED --- should be false | %s %d\n ",
 			__FUNCTION__, 8);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	pdgp._current_line_i = 68;
 	ok = pdgp._param(&pdgp);
@@ -251,7 +251,7 @@ troisième ligne sans eol\"\n\
 	{
 		printf("FAILED --- should be false | %s %d\n ",
 			__FUNCTION__, 9);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 
 	iCluige.iProjectDotGodotParser.pre_delete_ProjectDotGodotParser(&pdgp);
@@ -266,7 +266,7 @@ static void test__parse_whole()
 	{
 		printf("FAILED --- should be true | %s %d\n ",
 			__FUNCTION__, 0);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 	SortedDictionary* dic = &(pdgp._dico_params);
 	int n = iCluige.iSortedDictionary.size(dic);
@@ -274,7 +274,7 @@ static void test__parse_whole()
 	{
 		printf("FAILED --- unexpected %d instead of 192 | %s %d\n ", n,
 			__FUNCTION__, 1);
-		utils_breakpoint_trick(&ok, true);
+		CLUIGE_BREAKPOINT(&ok, true);
 	}
 
 //	char* dbg_dic = iCluige.iSortedDictionary.debug_str_str(&(pdgp._dico_params));
@@ -324,7 +324,7 @@ ui_up : [  uni:122=122 ]\n\
 	{
 		printf("FAILED --- unexpected \n%s\n instead of \n%s | %s %d\n ", read_inputs, wanted_str,
 			__FUNCTION__, 2);
-		utils_breakpoint_trick(read_inputs, true);
+		CLUIGE_BREAKPOINT(read_inputs, true);
 	}
 
 	iCluige.iProjectDotGodotParser.pre_delete_ProjectDotGodotParser(&pdgp);

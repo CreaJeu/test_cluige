@@ -53,7 +53,7 @@ int main()
 
 	int finish = cluige_finish();
 
-//	utils_breakpoint_trick(NULL, true);
+//	CLUIGE_BREAKPOINT(NULL, true);
 	//printf("\nThe End ! Press ENTER key to quit...\n");
 	//getchar();
 
