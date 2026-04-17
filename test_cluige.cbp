@@ -103,6 +103,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="camera_test.h" />
+		<Unit filename="collisions_printf_test.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="collisions_printf_test.h" />
 		<Unit filename="common_test.h" />
 		<Unit filename="godot_example/scripts/tenth_of_screen.c">
 			<Option compilerVar="CC" />

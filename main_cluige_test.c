@@ -12,6 +12,7 @@
 #include "node_test.h"
 #include "tscn_parser_test.h"
 #include "project_dot_godot_parser_test.h"
+#include "collisions_printf_test.h"
 
 static void trick_for_tests_from_scratch()
 {}
@@ -33,6 +34,7 @@ int main()
 	node_all_tests();
 	tscn_parser_all_tests();
 	project_dot_godot_parser_all_tests();
+	collisions_all_tests();
 
 	printf("\nEnd of printf tests. Press ENTER key to continue with graphical tests...\n");
 	getchar();
