@@ -959,8 +959,8 @@ text = \"do re mi\"\n\
 
 	//instantiate
 	Node* my_game_root_node = iCluige.iPackedScene.instantiate(ps);
-	iCluige.iNode.add_child(iCluige.public_root_2D, my_game_root_node);
-	iCluige.iNode.print_tree_pretty(iCluige.public_root_2D);
+	iCluige.iNode.add_child(iCluige.public_root, my_game_root_node);
+	iCluige.iNode.print_tree_pretty(iCluige.public_root);
 
 	iCluige.iSortedDictionary.erase(&(iCluige.iScript.script_factories), "note");
 //
@@ -1010,11 +1010,11 @@ void tscn_parser_all_tests()
 	test_pksc_instantiate_with_instance();
 
 
-	//clear all public_root_2D children for a fresh start
-	int count = iCluige.iNode.get_child_count(iCluige.public_root_2D);
+	//clear all public_root children for a fresh start
+	int count = iCluige.iNode.get_child_count(iCluige.public_root);
 	for(int i = 0; i<count; i++)
 	{
-		Node* child_i = iCluige.iNode.get_child(iCluige.public_root_2D, i);
+		Node* child_i = iCluige.iNode.get_child(iCluige.public_root, i);
 		iCluige.iNode.queue_free(child_i);
 	}
 

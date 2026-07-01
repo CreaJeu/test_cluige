@@ -217,7 +217,7 @@ void launch_camera()
 	Node* gameRootRootNode = gameRootNode2D->_this_Node;
 	iCluige.iNode.set_name(gameRootRootNode, "Game");
 	//iCluige.iNode2D.move_local(gameRootNode2D, (Vector2){15., 15.});
-	iCluige.iNode.add_child(iCluige.public_root_2D, gameRootRootNode);
+	iCluige.iNode.add_child(iCluige.public_root, gameRootRootNode);
 
 
 
@@ -334,7 +334,7 @@ void end_camera_test()
 		iCluige.iInput.remove_last_available_action();
 	}
 	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
-	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game");
+	Node* game_root = iCluige.iNode.get_node(iCluige.public_root, "Game", true);
 	iCluige.iNode.queue_free(game_root);
 }
 

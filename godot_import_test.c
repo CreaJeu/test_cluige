@@ -47,7 +47,7 @@ void end_godot_test()
 //	iCluige.iInput.un_bind_key_all_actions(' ');// no new input in this test
 //	iCluige.iInput.remove_last_available_action();//"JUMP"
 
-	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "main_Node");
+	Node* game_root = iCluige.iNode.get_node(iCluige.public_root, "main_Node", true);
 	iCluige.iNode.queue_free(game_root);
 
 	SortedDictionary* fcties = &(iCluige.iScript.script_factories);

@@ -76,7 +76,7 @@ void launch_recursive_tscn_test()
 	iCluige.iTscnParser.pre_delete_TscnParser(&parser_up);
 
 	tmp_test_Node = iCluige.iPackedScene.instantiate(ps);
-	iCluige.iNode.add_child(iCluige.public_root_2D, tmp_test_Node);
+	iCluige.iNode.add_child(iCluige.public_root, tmp_test_Node);
 
 //	newPlayer(playerNode);// attach script to The player node
 }

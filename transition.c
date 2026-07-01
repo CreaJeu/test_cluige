@@ -106,7 +106,7 @@ void init_transition()
 	//gameroot node
 	Node* transitionNode = iCluige.iNode.new_Node();
 	iCluige.iNode.set_name(transitionNode, "Transition");
-	iCluige.iNode.add_child(iCluige.public_root_2D, transitionNode);
+	iCluige.iNode.add_child(iCluige.public_root, transitionNode);
 	newTransition(transitionNode);// attach script to The Transition node
 
 	NEXT = iCluige.iInput.add_action("NEXT");

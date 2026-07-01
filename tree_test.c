@@ -251,7 +251,7 @@ static void process_Monitor(Script* this_Script, float elapsed_seconds)
 				struct _GenealogyMonsterScript* gm = new_GenealogyMonster(n);
 				gm->monster_id = i;
 			}
-			Node* g_parent = iCluige.iNode.get_node(iCluige.public_root_2D, "Game_tree_test");
+			Node* g_parent = iCluige.iNode.get_node(iCluige.public_root, "Game_tree_test", true);
 			iCluige.iNode.add_child(g_parent, genealogy_monsters[0]);
 			if(strlen(msg) > 80)
 			{
@@ -273,12 +273,12 @@ instructions                       monsters instantiated correctly, continue to 
 		{
 
 			test_tree_step++;
-			Node* n = iCluige.iNode.get_node(iCluige.public_root_2D,
-					"Game_tree_test/game>dummy0/game>dummy0>dummy0");
+			Node* n = iCluige.iNode.get_node(iCluige.public_root,
+					"Game_tree_test/game>dummy0/game>dummy0>dummy0", true);
 			iCluige.iNode.add_child(n, monsters[0]);
 			iCluige.iNode.add_child(n, monsters[1]);
-			n = iCluige.iNode.get_node(iCluige.public_root_2D,
-					"Game_tree_test/game>dummy1/game>dummy1>dummy1");
+			n = iCluige.iNode.get_node(iCluige.public_root,
+					"Game_tree_test/game>dummy1/game>dummy1>dummy1", true);
 			iCluige.iNode.add_child(n, monsters[2]);
 			iCluige.iNode.add_child(n, monsters[3]);
 			iCluige.iSpriteText.set_text(this_SpriteText,
@@ -333,7 +333,7 @@ void launch_tree_test()
 	Node2D* gameRootNode2D = iCluige.iNode2D.new_Node2D();
 	Node* gameRootRootNode = gameRootNode2D->_this_Node;
 	iCluige.iNode.set_name(gameRootRootNode, "Game_tree_test");
-	iCluige.iNode.add_child(iCluige.public_root_2D, gameRootRootNode);
+	iCluige.iNode.add_child(iCluige.public_root, gameRootRootNode);
 
 	//instructions
 	Node* monitor_sprite = generate_SpriteText("game>monitor", gameRootRootNode,
@@ -369,7 +369,7 @@ void end_tree_test()
 	iCluige.iInput.un_bind_key_all_actions(' ');
 	iCluige.iInput.remove_last_available_action();//"JUMP"
 	iCluige.iCamera2D.make_current(iCluige.iCamera2D.default_camera);
-	Node* game_root = iCluige.iNode.get_node(iCluige.public_root_2D, "Game_tree_test");
+	Node* game_root = iCluige.iNode.get_node(iCluige.public_root, "Game_tree_test", true);
 	iCluige.iNode.queue_free(game_root);
 }
 
