@@ -274,7 +274,7 @@ static void test_SpriteText_instantiate()
 	{
 		printf("FAILED --- should be 42  | test_SpriteText_instantiate 7\n ");
 	}
-	if(0 != strcmp(res2->_new_baked_text, "un es\"sai\n de te\"xte\n\nmultiligne"))
+	if(0 != strcmp(res2->text, "un es\"sai\n de te\"xte\n\nmultiligne"))
 	{
 		printf("FAILED --- should be \"un es\"sai...\"  | test_SpriteText_instantiate 8\n ");
 	}
@@ -651,8 +651,8 @@ static const Node* test_node_against_packed_scene(const Node* n, const PackedSce
 		found = utils_str_from_parsed(&ps_txt, &(ps->dico_node), "text");
 		if(found)
 		{
-			int first_line_len = strlen(n_SprtTxt->_new_baked_text);
-			if(strncmp(ps_txt, n_SprtTxt->_new_baked_text, first_line_len) != 0)
+			int first_line_len = strlen(n_SprtTxt->text);
+			if(strncmp(ps_txt, n_SprtTxt->text, first_line_len) != 0)
 			{
 				return n;
 			}

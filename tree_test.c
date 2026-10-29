@@ -211,7 +211,17 @@ static void process_Monitor(Script* this_Script, float elapsed_seconds)
 				sprintf(name, "monster%d", i);
 				iCluige.iNode.set_name(n, name);
 				iCluige.iSpriteText.set_text(st, name);
-				iCluige.iNode2D.move_local(st->_this_Node2D, (Vector2){24, -2 + (4*(i%2))});
+				iCluige.iNode2D.move_local(st->_this_Node2D, (Vector2){24, -2 + (6*(i%2))});
+
+				SpriteSVG* monster_svg = iCluige.iSpriteSVG.new_SpriteSVG();
+				iCluige.iNode.add_child(n, monster_svg->_this_Node2D->_this_Node);
+//				monster_svg->centered = false;
+				iCluige.iSpriteSVG.parse_file(monster_svg,"godot_example/assets/tenth_of_screen.svg");
+				iCluige.iNode2D.move_local(
+						monster_svg->_this_Node2D,
+						(Vector2){strlen(sb.built_string), + 1});
+				monster_svg->scale = (Vector2){.2, .2};
+
 				monsters[i] = n;
 				struct _MonsterScript* m = new_Monster(n);
 				m->monster_id = i;
@@ -347,7 +357,7 @@ instructions\n\
 	Node* gd0 = generate_SpriteText("game>dummy0", gameRootRootNode,
 			"game>dummy0", 1, 10);
 	Node* gd1 = generate_SpriteText("game>dummy1", gameRootRootNode,
-			"game>dummy1", 1, 18);
+			"game>dummy1", 1, 20);
 //	Node* gd00 =
 	generate_SpriteText("game>dummy0>dummy0", gd0,
 			"game>dummy0>dummy0", 18, -2);
